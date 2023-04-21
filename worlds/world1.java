@@ -30,4 +30,9 @@ public class world1 extends Room {
             Window.get().changeRoom(1);
         }
     }
+
+    @Override
+    public void init() {
+
+    }
 }

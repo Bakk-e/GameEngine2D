@@ -13,4 +13,9 @@ public class world2 extends Room {
     public void update(float dT) {
 
     }
+
+    @Override
+    public void init() {
+
+    }
 }

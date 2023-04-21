@@ -6,4 +6,6 @@ public abstract class Room {
     }
 
     public abstract void update(float dT);
+
+    public abstract void init();
 }
