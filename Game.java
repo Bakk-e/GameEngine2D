@@ -27,7 +27,7 @@ public class Game extends Window {
         changeRoom(0);
     }
 
-    //In update you put all the code that is going to run every frame of your game
+    //In update, you put all the code that is going to run every frame of your game
     @Override
     public void update(float dT) {
         if (dT >= 0) {
@@ -40,12 +40,12 @@ public class Game extends Window {
     public void changeRoom(int newRoom) {
         switch (newRoom) {
             case 0:
-                currentRoom = new world2();
-                //currentRoom.init();
+                currentRoom = new world1();
+                currentRoom.init();
                 break;
             case 1:
-                currentRoom = new world1();
-                //currentRoom.init();
+                currentRoom = new world2();
+                currentRoom.init();
                 break;
             default:
                 assert false : "Room not found '" + newRoom + "'";
