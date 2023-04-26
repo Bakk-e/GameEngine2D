@@ -58,6 +58,13 @@ public class Window {
         return Window.window;
     }
 
+    public static Room getCurrentRoom() {
+        return currentRoom;
+    }
+    public static void setCurrentRoom(Room currentRoom) {
+        Window.currentRoom = currentRoom;
+    }
+
     public void changeRoom(int newRoom) {
         switch (newRoom) {
             case 0:
@@ -187,7 +194,7 @@ public class Window {
 
     }
 
-    public void update(float dT) {
+    public void update(float deltaTime) {
 
     }
 
@@ -196,7 +203,7 @@ public class Window {
         double lastTime = glfwGetTime();
         float beginTime = Time.getTime();
         float endTime;
-        float dT = -1.0f;
+        float deltaTime = -1.0f;
 
         while (!glfwWindowShouldClose(glfwWindow)) {
             glfwPollEvents();
@@ -204,12 +211,12 @@ public class Window {
             glClearColor(r, g, b, alpha);
             glClear(GL_COLOR_BUFFER_BIT);
 
-            update(dT);
+            update(deltaTime);
 
             glfwSwapBuffers(glfwWindow);
 
             endTime = Time.getTime();
-            dT = endTime - beginTime;
+            deltaTime = endTime - beginTime;
             beginTime = endTime;
             while (glfwGetTime() < lastTime  + 1.0/fps) {
 

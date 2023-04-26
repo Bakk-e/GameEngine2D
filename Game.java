@@ -42,10 +42,12 @@ public class Game extends Window {
             case 0:
                 currentRoom = new world1();
                 currentRoom.init();
+                currentRoom.start();
                 break;
             case 1:
                 currentRoom = new world2();
                 currentRoom.init();
+                currentRoom.start();
                 break;
             default:
                 assert false : "Room not found '" + newRoom + "'";
