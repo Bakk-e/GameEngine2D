@@ -1,11 +1,14 @@
 package HIOF.GameEnigne2D.worlds;
 
+import HIOF.GameEnigne2D.components.Sprite;
 import HIOF.GameEnigne2D.components.SpriteRenderer;
+import HIOF.GameEnigne2D.components.Spritesheet;
 import HIOF.GameEnigne2D.components.Transform;
 import HIOF.GameEnigne2D.modules.*;
 import HIOF.GameEnigne2D.utils.AssetPool;
 import org.joml.Vector2f;
-import org.joml.Vector4f;
+
+import static org.lwjgl.glfw.GLFW.*;
 
 
 public class world1 extends Room {
@@ -15,42 +18,32 @@ public class world1 extends Room {
     }
 
     @Override
+    public void init() {
+        loadResources();
+        this.camera = new Camera(new Vector2f(-250, 0));
+
+        Spritesheet sprites = AssetPool.getSpritesheet("assets/images/spritesheet.png");
+
+        GameObject obj1 = new GameObject(new Transform(new Vector2f(100, 100), new Vector2f(256, 256)));
+        obj1.addComponent(new SpriteRenderer(sprites.getSprite(0)));
+        this.addGameObject(obj1);
+    }
+
+    @Override
     public void update(float deltaTime) {
         System.out.println("FPS: " + (1.0f / deltaTime));
-        for (GameObject go : this.gameObjects) {
-            go.update(deltaTime);
+        for (GameObject object : this.gameObjects) {
+            object.update(deltaTime);
         }
         Window.get().setColor(1.0f, 1.0f, 1.0f);
         this.renderer.render();
     }
 
-    @Override
-    public void init() {
-        this.camera = new Camera(new Vector2f(-300, -200));
-
-        int xOffset = 10;
-        int yOffset = 10;
-
-        float totalWidth = (float)(600 - xOffset * 2);
-        float totalHeight = (float)(300 - yOffset * 2);
-        float sizeX = totalWidth / 100.0f;
-        float sizeY = totalHeight / 100.0f;
-
-        for (int x = 0; x < 100; x++) {
-            for (int y = 0; y < 100; y++) {
-                float xPos = xOffset + (x * sizeX);
-                float yPos = yOffset + (y * sizeY);
-
-                GameObject object = new GameObject(new Transform(new Vector2f(xPos, yPos), new Vector2f(sizeX, sizeY)));
-                object.addComponent(new SpriteRenderer(new Vector4f(xPos / totalWidth, yPos / totalHeight, 1, 1)));
-                this.addGameObject(object);
-            }
-        }
-
-        loadResources();
-    }
-
     private void loadResources() {
         AssetPool.getShader("assets/shaders/default.glsl");
+
+        AssetPool.addSpriteSheet("assets/images/spritesheet.png",
+                new Spritesheet(AssetPool.getTexture("assets/images/spritesheet.png"), 16,
+                        16, 26, 0));
     }
 }

@@ -1,6 +1,5 @@
 package HIOF.GameEnigne2D.modules;
 
-import HIOF.GameEnigne2D.utils.Time;
 import HIOF.GameEnigne2D.worlds.world1;
 import HIOF.GameEnigne2D.worlds.world2;
 import org.lwjgl.Version;
@@ -201,7 +200,7 @@ public class Window {
     public void loop() {
         setup();
         double lastTime = glfwGetTime();
-        float beginTime = Time.getTime();
+        float beginTime = (float)glfwGetTime();
         float endTime;
         float deltaTime = -1.0f;
 
@@ -215,7 +214,7 @@ public class Window {
 
             glfwSwapBuffers(glfwWindow);
 
-            endTime = Time.getTime();
+            endTime = (float)glfwGetTime();
             deltaTime = endTime - beginTime;
             beginTime = endTime;
             while (glfwGetTime() < lastTime  + 1.0/fps) {

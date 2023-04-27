@@ -21,13 +21,16 @@ public class Renderer {
         }
     }
 
-    private void add(SpriteRenderer sprite) {
+    private void add(SpriteRenderer spriteRenderer) {
         boolean added = false;
         for (RenderBatch batch : batches) {
             if (batch.hasRoom()) {
-                batch.addSprite(sprite);
-                added = true;
-                break;
+                Texture texture = spriteRenderer.getTexture();
+                if (texture == null || (batch.hasSprite(texture) || batch.hasSpriteRoom())) {
+                    batch.addSprite(spriteRenderer);
+                    added = true;
+                    break;
+                }
             }
         }
 
@@ -35,7 +38,7 @@ public class Renderer {
             RenderBatch newBatch = new RenderBatch(maxBatchSize);
             newBatch.start();
             batches.add(newBatch);
-            newBatch.addSprite(sprite);
+            newBatch.addSprite(spriteRenderer);
         }
     }
 

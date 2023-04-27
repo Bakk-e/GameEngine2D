@@ -1,7 +1,8 @@
 package HIOF.GameEnigne2D.utils;
 
+import HIOF.GameEnigne2D.components.Spritesheet;
 import HIOF.GameEnigne2D.renderer.Shader;
-import HIOF.GameEnigne2D.renderer.Sprite;
+import HIOF.GameEnigne2D.renderer.Texture;
 
 import java.io.File;
 import java.util.HashMap;
@@ -9,7 +10,8 @@ import java.util.Map;
 
 public class AssetPool {
     private static Map<String, Shader> shaders = new HashMap<>();
-    private static Map<String, Sprite> sprites = new HashMap<>();
+    private static Map<String, Texture> textures = new HashMap<>();
+    private static Map<String, Spritesheet> spritesheets = new HashMap<>();
 
     public static Shader getShader(String resourceName) {
         File file = new File(resourceName);
@@ -23,14 +25,29 @@ public class AssetPool {
         }
     }
 
-    public static Sprite getSprite(String resourceName) {
+    public static Texture getTexture(String resourceName) {
         File file = new File(resourceName);
-        if (AssetPool.sprites.containsKey(file.getAbsolutePath())) {
-            return AssetPool.sprites.get(file.getAbsolutePath());
+        if (AssetPool.textures.containsKey(file.getAbsolutePath())) {
+            return AssetPool.textures.get(file.getAbsolutePath());
         } else {
-            Sprite sprite = new Sprite(resourceName);
-            AssetPool.sprites.put(file.getAbsolutePath(), sprite);
-            return sprite;
+            Texture texture = new Texture(resourceName);
+            AssetPool.textures.put(file.getAbsolutePath(), texture);
+            return texture;
         }
+    }
+
+    public static void addSpriteSheet(String resourceName, Spritesheet spritesheet) {
+        File file = new File(resourceName);
+        if (!AssetPool.spritesheets.containsKey(file.getAbsolutePath())) {
+            AssetPool.spritesheets.put(file.getAbsolutePath(), spritesheet);
+        }
+    }
+
+    public static Spritesheet getSpritesheet(String resourceName) {
+        File file = new File(resourceName);
+        if (!AssetPool.spritesheets.containsKey(file.getAbsolutePath())) {
+            assert false : "Error: Tried to access spritesheet that has not been added to asset pool";
+        }
+        return AssetPool.spritesheets.getOrDefault(file.getAbsolutePath(), null);
     }
 }
