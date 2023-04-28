@@ -1,12 +1,9 @@
 package HIOF.GameEnigne2D.worlds;
 
-import HIOF.GameEnigne2D.components.Sprite;
 import HIOF.GameEnigne2D.components.SpriteRenderer;
 import HIOF.GameEnigne2D.components.Spritesheet;
-import HIOF.GameEnigne2D.components.Transform;
 import HIOF.GameEnigne2D.modules.*;
 import HIOF.GameEnigne2D.utils.AssetPool;
-import org.joml.Vector2f;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -20,30 +17,40 @@ public class world1 extends Room {
     @Override
     public void init() {
         loadResources();
-        this.camera = new Camera(new Vector2f(-250, 0));
+        Window.get().setColor(1.0f, 1.0f, 1.0f);
+        this.camera = new Camera(-250, 0);
 
         Spritesheet sprites = AssetPool.getSpritesheet("assets/images/spritesheet.png");
 
-        GameObject obj1 = new GameObject(new Transform(new Vector2f(100, 100), new Vector2f(256, 256)));
+        GameObject obj1 = new GameObject(100, 100, 256, 256, 1);
         obj1.addComponent(new SpriteRenderer(sprites.getSprite(0)));
         this.addGameObject(obj1);
     }
 
     @Override
     public void update(float deltaTime) {
+        if (KeyListener.isKeyPressed(GLFW_KEY_D)) {
+            gameObjects.get(0).changeX(4);
+        }
+        if (KeyListener.isKeyPressed(GLFW_KEY_A)) {
+            gameObjects.get(0).changeX(-4);
+        }
+        if (KeyListener.isKeyPressed(GLFW_KEY_W)) {
+            gameObjects.get(0).changeY(4);
+        }
+        if (KeyListener.isKeyPressed(GLFW_KEY_S)) {
+            gameObjects.get(0).changeY(-4);
+        }
         System.out.println("FPS: " + (1.0f / deltaTime));
         for (GameObject object : this.gameObjects) {
             object.update(deltaTime);
         }
-        Window.get().setColor(1.0f, 1.0f, 1.0f);
         this.renderer.render();
     }
 
     private void loadResources() {
-        AssetPool.getShader("assets/shaders/default.glsl");
+        AssetPool.getShader();
 
-        AssetPool.addSpriteSheet("assets/images/spritesheet.png",
-                new Spritesheet(AssetPool.getTexture("assets/images/spritesheet.png"), 16,
-                        16, 26, 0));
+        AssetPool.addSpriteSheet("assets/images/spritesheet.png", 16, 16, 26, 0);
     }
 }

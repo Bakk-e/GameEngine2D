@@ -1,7 +1,5 @@
 package HIOF.GameEnigne2D.modules;
 
-import HIOF.GameEnigne2D.worlds.world1;
-import HIOF.GameEnigne2D.worlds.world2;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
@@ -21,6 +19,9 @@ public class Window {
     protected static Window window = null;
     protected static Room currentRoom;
 
+
+    //This creates a basic window so that the user doesn't have to do it themselves. To actually add code you should
+    // create a child object and override changeRoom, setup and update
     protected Window() {
         this.r = 0;
         this.g = 0;
@@ -66,13 +67,6 @@ public class Window {
 
     public void changeRoom(int newRoom) {
         switch (newRoom) {
-            case 0:
-                currentRoom = new world1();
-                //currentRoom.init();
-                break;
-            case 1:
-                currentRoom = new world2();
-                break;
             default:
                 assert false : "Room not found '" + newRoom + "'";
                 break;
@@ -140,6 +134,11 @@ public class Window {
         this.alpha += value;
     }
 
+    /**
+     * @param r red value
+     * @param g green value
+     * @param b blue value
+     */
     public void setColor(float r, float g, float b) {
         this.r = r;
         this.g = g;
@@ -159,6 +158,8 @@ public class Window {
         glfwSetErrorCallback(null).free();
     }
 
+
+    //Initializes everything that is needed to make a window function and creates key and mouse listeners to the window
     public void init() {
         GLFWErrorCallback.createPrint(System.err).set();
 
@@ -187,6 +188,9 @@ public class Window {
         glfwShowWindow(glfwWindow);
 
         GL.createCapabilities();
+
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
     }
 
     public void setup() {
@@ -197,6 +201,8 @@ public class Window {
 
     }
 
+
+    //Creates a simple loop and limits the fps to what ever the input is
     public void loop() {
         setup();
         double lastTime = glfwGetTime();

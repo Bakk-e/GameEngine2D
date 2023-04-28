@@ -8,6 +8,9 @@ public class MouseListener {
     private boolean mouseButtonPressed[] = new boolean[3];
     private boolean drag;
 
+
+    //This isn't functioning right now but will later be used to allow mouse actions
+
     private MouseListener() {
         this.scrollX = 0.0;
         this.scrollY = 0.0;

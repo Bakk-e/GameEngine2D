@@ -7,6 +7,8 @@ public class KeyListener {
     private static KeyListener instance;
     private boolean keyPressed[] = new boolean[350];
 
+
+    //This takes in the GLFW keyCodes and processes them
     private KeyListener() {
 
     }

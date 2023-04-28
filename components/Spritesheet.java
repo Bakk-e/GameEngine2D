@@ -10,6 +10,8 @@ public class Spritesheet {
     private Texture texture;
     private List<Sprite> sprites;
 
+
+    //Takes a sprite sheet and inputs of the size of each sprite and then maps out each sprite for later use
     public Spritesheet(Texture texture, int spriteWidth, int spriteHeight, int numSprites, int spacing) {
         this.sprites = new ArrayList<>();
         this.texture = texture;
@@ -38,6 +40,10 @@ public class Spritesheet {
         }
     }
 
+    /**
+     * @param index index of the sprite
+     * @return sprite object
+     */
     public Sprite getSprite(int index) {
         return this.sprites.get(index);
     }

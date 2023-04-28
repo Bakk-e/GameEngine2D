@@ -7,6 +7,7 @@ public class Sprite {
     private Texture texture;
     private Vector2f[] textureCords;
 
+    //Creates a new texture and maps its vertices in the correct order
     public Sprite(Texture texture) {
         this.texture = texture;
         textureCords = new Vector2f[] {

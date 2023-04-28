@@ -14,7 +14,7 @@ import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
-public class RenderBatch {
+public class RenderBatch implements Comparable<RenderBatch>{
     private final int positionSize = 2;
     private final int colorSize = 4;
     private final int spriteCordsSize = 2;
@@ -36,10 +36,12 @@ public class RenderBatch {
     private int vaoID, vboID;
     private int maxBatchSize;
     private Shader shader;
+    private int zIndex;
 
 
-    public RenderBatch(int maxBatchSize) {
-        shader = AssetPool.getShader("assets/shaders/default.glsl");
+    public RenderBatch(int maxBatchSize, int zIndex) {
+        this.zIndex = zIndex;
+        shader = AssetPool.getShader();
         shader.compileAndLink();
         this.spriteRenderers = new SpriteRenderer[maxBatchSize];
         this.maxBatchSize = maxBatchSize;
@@ -51,6 +53,8 @@ public class RenderBatch {
         this.textures = new ArrayList<>();
     }
 
+    //Creates vertexArrays and buffers for all the textures it has to calulate. Here it uses code from default.glsl to
+    // create the vertexArrays
     public void start() {
         vaoID = glGenVertexArrays();
         glBindVertexArray(vaoID);
@@ -77,6 +81,7 @@ public class RenderBatch {
         glEnableVertexAttribArray(3);
     }
 
+    //Adds sprites to the RenderBatches as long as they don't already exist
     public void addSprite(SpriteRenderer sprite) {
         int index = this.numSprites;
         this.spriteRenderers[index] = sprite;
@@ -95,9 +100,25 @@ public class RenderBatch {
         }
     }
 
+
+    //Uses the previously created vertices and then updates the sprites already drawn and then re buffers. Then it
+    // uses the shader class, adds matrices created in default.glsl and binds them to the shader. To then draw the 2
+    // triangles that makes up the sprite
     public void render() {
-        glBindBuffer(GL_ARRAY_BUFFER, vboID);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
+        boolean rebufferData = false;
+        for (int i = 0; i < numSprites; i++) {
+            SpriteRenderer spriteR = spriteRenderers[i];
+            if (spriteR.isDirty()) {
+                loadVertexProperties(i);
+                spriteR.setClean();
+                rebufferData = true;
+            }
+        }
+
+        if (rebufferData) {
+            glBindBuffer(GL_ARRAY_BUFFER, vboID);
+            glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
+        }
 
         shader.use();
         shader.uploadMat4f("uProjectionMatrix", Window.getCurrentRoom().getCamera().getProjectionMatrix());
@@ -124,6 +145,7 @@ public class RenderBatch {
         shader.detach();
     }
 
+    //Calculates the vertices of the sprite to locate where the triangles that make up the sprite are
     private void loadVertexProperties(int index) {
         SpriteRenderer sprite = this.spriteRenderers[index];
 
@@ -171,6 +193,7 @@ public class RenderBatch {
         }
     }
 
+    //Creates a batch of elements which is used to create the buffer data
     private int[] generateIndices() {
         int[] elements = new int [6 * maxBatchSize];
         for (int i = 0; i < maxBatchSize; i++) {
@@ -203,5 +226,14 @@ public class RenderBatch {
 
     public boolean hasSprite(Texture texture) {
         return this.textures.contains(texture);
+    }
+
+    public int zIndex() {
+        return this.zIndex;
+    }
+
+    @Override
+    public int compareTo(RenderBatch o) {
+        return Integer.compare(this.zIndex, o.zIndex());
     }
 }

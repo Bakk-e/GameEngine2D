@@ -20,6 +20,8 @@ public class Shader {
     private String vertexSource;
     private String fragmentSource;
 
+
+    //Creates the shader by getting the code written in default.glsl, which is then passed on
     public Shader(String filepath) {
         this.filepath = filepath;
         try {
@@ -55,6 +57,7 @@ public class Shader {
         }
     }
 
+    //Creates the vertex and fragment shaders from the code in default.glsl, and links them together
     public void compileAndLink() {
         int vertexID, fragmentID;
 

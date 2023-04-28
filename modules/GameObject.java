@@ -1,6 +1,7 @@
 package HIOF.GameEnigne2D.modules;
 
 import HIOF.GameEnigne2D.components.Transform;
+import org.joml.Vector2f;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,14 +9,27 @@ import java.util.List;
 public class GameObject {
     private List<Component> components;
     private Transform transform;
+    private int zIndex;
+
+    //Sets up gameobjects by taking in positioning, scale, and it's zIndex (which is the layer the object is put)
+
     public GameObject() {
+        this.zIndex = 0;
         this.components = new ArrayList<>();
         this.transform = new Transform();
     }
 
-    public GameObject(Transform transform) {
+    /**
+     * @param x x position
+     * @param y y position
+     * @param width width of sprite
+     * @param height width of sprite
+     * @param zIndex layer
+     */
+    public GameObject(int x, int y, int width, int height, int zIndex) {
+        this.zIndex = zIndex;
         this.components = new ArrayList<>();
-        this.transform = transform;
+        this.transform = new Transform(new Vector2f(x, y), new Vector2f(width, height));
     }
 
     public <T extends Component> T getComponent(Class<T> componentClass) {
@@ -42,6 +56,9 @@ public class GameObject {
         }
     }
 
+    /**
+     * @param component new SpriteRenderer
+     */
     public void addComponent(Component component) {
         this.components.add(component);
         component.gameObject = this;
@@ -64,5 +81,17 @@ public class GameObject {
     }
     public void setTransform(Transform transform) {
         this.transform = transform;
+    }
+
+    public void changeX(int value) {
+        this.transform.getPosition().x += value;
+    }
+
+    public void changeY(int value) {
+        this.transform.getPosition().y += value;
+    }
+
+    public int zIndex() {
+        return this.zIndex;
     }
 }

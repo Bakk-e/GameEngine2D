@@ -13,6 +13,8 @@ public class Texture {
     private int textureID;
     private int width, height;
 
+
+    //Creates a texture and splits the colors into channels to be processed later
     public Texture(String filepath) {
         this.filepath = filepath;
 

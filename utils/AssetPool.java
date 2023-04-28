@@ -13,7 +13,11 @@ public class AssetPool {
     private static Map<String, Texture> textures = new HashMap<>();
     private static Map<String, Spritesheet> spritesheets = new HashMap<>();
 
-    public static Shader getShader(String resourceName) {
+
+    //Divides the processes into HashMaps so that what should be process together is processed together. To make sure
+    // the rendering is as efficient as possible
+    public static Shader getShader() {
+        String resourceName = "assets/shaders/default.glsl";
         File file = new File(resourceName);
         if (shaders.containsKey(file.getAbsolutePath())) {
             return shaders.get(file.getAbsolutePath());
@@ -36,13 +40,25 @@ public class AssetPool {
         }
     }
 
-    public static void addSpriteSheet(String resourceName, Spritesheet spritesheet) {
+    /**
+     * @param resourceName filepath
+     * @param spriteWidth width of each individual sprite
+     * @param spriteHeight height of each individual sprite
+     * @param numberOfSprites number of individual sprites
+     * @param spacing spacing between sprites
+     */
+    public static void addSpriteSheet(String resourceName, int spriteWidth, int spriteHeight, int numberOfSprites, int spacing) {
         File file = new File(resourceName);
+        Spritesheet spritesheet = new Spritesheet(AssetPool.getTexture(resourceName), spriteWidth, spriteHeight, numberOfSprites, spacing);
         if (!AssetPool.spritesheets.containsKey(file.getAbsolutePath())) {
             AssetPool.spritesheets.put(file.getAbsolutePath(), spritesheet);
         }
     }
 
+    /**
+     * @param resourceName filepath
+     * @return list of sprites
+     */
     public static Spritesheet getSpritesheet(String resourceName) {
         File file = new File(resourceName);
         if (!AssetPool.spritesheets.containsKey(file.getAbsolutePath())) {

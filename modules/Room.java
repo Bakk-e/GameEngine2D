@@ -12,6 +12,9 @@ public abstract class Room {
     private boolean isRunning = false;
     protected List<GameObject> gameObjects = new ArrayList<>();
 
+
+    //This is a base for all other rooms, it renders objects and lets you add GameObjects to the room. When creating a
+    // child of this you have to override update and init function to add your own code
     public Room() {
 
     }
@@ -29,6 +32,9 @@ public abstract class Room {
         isRunning = true;
     }
 
+    /**
+     * @param object GameObject
+     */
     public void addGameObject(GameObject object) {
         if (!isRunning) {
             gameObjects.add(object);
