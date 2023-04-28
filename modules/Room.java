@@ -19,9 +19,8 @@ public abstract class Room {
 
     }
 
-    public abstract void update(float dT);
-
     public abstract void init();
+    public abstract void update(float deltaTime);
 
     public void start() {
 

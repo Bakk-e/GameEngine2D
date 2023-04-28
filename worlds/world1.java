@@ -49,8 +49,6 @@ public class world1 extends Room {
     }
 
     private void loadResources() {
-        AssetPool.getShader();
-
         AssetPool.addSpriteSheet("assets/images/spritesheet.png", 16, 16, 26, 0);
     }
 }
