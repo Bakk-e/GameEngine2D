@@ -83,10 +83,16 @@ public class GameObject {
         this.transform = transform;
     }
 
+    /**
+     * @param value changes X by this value
+     */
     public void changeX(int value) {
         this.transform.getPosition().x += value;
     }
 
+    /**
+     * @param value changes Y by this value
+     */
     public void changeY(int value) {
         this.transform.getPosition().y += value;
     }

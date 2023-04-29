@@ -18,11 +18,11 @@ public class world1 extends Room {
     public void init() {
         loadResources();
         Window.get().setColor(1.0f, 1.0f, 1.0f);
-        this.camera = new Camera(-250, 0);
+        this.camera = new Camera(0, 0);
 
         Spritesheet sprites = AssetPool.getSpritesheet("assets/images/spritesheet.png");
 
-        GameObject obj1 = new GameObject(100, 100, 256, 256, 1);
+        GameObject obj1 = new GameObject((Window.get().getWidth() / 2) - (256 / 2), (Window.get().getHeight() / 2) - (256 / 2), 256, 256, 1);
         obj1.addComponent(new SpriteRenderer(sprites.getSprite(0)));
         this.addGameObject(obj1);
     }

@@ -8,23 +8,36 @@ public class Camera {
     private Matrix4f projectionMatrix, viewMatrix;
     private Vector2f position;
 
-
     /**
      * @param x x position
      * @param y y position
      */
-    //Camera is given its projection and its view, here it is set so that it only does 2 dimensions. But can be
-    // transfigured to do 3 dimensions with some work since its using OpenGL
     public Camera(int x, int y) {
         this.position = new Vector2f(x, y);
         this.projectionMatrix = new Matrix4f();
         this.viewMatrix = new Matrix4f();
-        adjustProjection();
+        adjustProjection(Window.window.getWidth(), Window.window.getHeight());
     }
 
-    public void adjustProjection() {
+
+    /**
+     * @param x x position
+     * @param y y position
+     * @param width width in pixels
+     * @param height height in pixels
+     */
+    //Camera is given its projection and its view, here it is set so that it only does 2 dimensions. But can be
+    // transfigured to do 3 dimensions with some work since its using OpenGL
+    public Camera(int x, int y, int width , int height) {
+        this.position = new Vector2f(x, y);
+        this.projectionMatrix = new Matrix4f();
+        this.viewMatrix = new Matrix4f();
+        adjustProjection(width, height);
+    }
+
+    public void adjustProjection(int width, int height) {
         projectionMatrix.identity();
-        projectionMatrix.ortho(0.0f, 32.0f * 40.0f, 0.0f, 32.0f * 21.0f, 0.0f, 100.0f);
+        projectionMatrix.ortho(0.0f, (float)width, 0.0f, (float)height, 0.0f, 100.0f);
     }
 
     public Matrix4f getViewMatrix() {
