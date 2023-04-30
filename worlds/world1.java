@@ -23,7 +23,7 @@ public class world1 extends Room {
         Spritesheet sprites = AssetPool.getSpritesheet("assets/images/spritesheet.png");
 
         GameObject obj1 = new GameObject((Window.get().getWidth() / 2) - (256 / 2), (Window.get().getHeight() / 2) - (256 / 2), 256, 256, 1);
-        obj1.addComponent(new SpriteRenderer(sprites.getSprite(0)));
+        obj1.addSprite(sprites.getSprite(0));
         this.addGameObject(obj1);
     }
 

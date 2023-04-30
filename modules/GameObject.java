@@ -1,5 +1,7 @@
 package HIOF.GameEnigne2D.modules;
 
+import HIOF.GameEnigne2D.components.Sprite;
+import HIOF.GameEnigne2D.components.SpriteRenderer;
 import HIOF.GameEnigne2D.components.Transform;
 import org.joml.Vector2f;
 
@@ -62,6 +64,10 @@ public class GameObject {
     public void addComponent(Component component) {
         this.components.add(component);
         component.gameObject = this;
+    }
+
+    public void addSprite(Sprite sprite) {
+        addComponent(new SpriteRenderer(sprite));
     }
 
     public void update(float deltaTime) {
