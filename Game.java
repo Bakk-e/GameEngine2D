@@ -1,5 +1,6 @@
 package HIOF.GameEnigne2D;
 
+import HIOF.GameEnigne2D.modules.Room;
 import HIOF.GameEnigne2D.modules.Window;
 import HIOF.GameEnigne2D.worlds.world1;
 
@@ -23,7 +24,7 @@ public class Game extends Window {
     //In setup, you put everything you want to happen before the game loop begins
     @Override
     public void setup() {
-        changeRoom(0);
+        changeRoom(new world1());
     }
 
     //In update, you put all the code that is going to run every frame of your game
@@ -31,26 +32,6 @@ public class Game extends Window {
     public void update(float deltaTime) {
         if (deltaTime >= 0) {
             currentRoom.update(deltaTime);
-        }
-    }
-
-    //ChangeRoom function is called to change to specific rooms using the corresponding case, which here is a number
-    @Override
-    public void changeRoom(int newRoom) {
-        switch (newRoom) {
-            case 0:
-                currentRoom = new world1();
-                currentRoom.init();
-                currentRoom.start();
-                break;
-            case 1:
-                //currentRoom = new world2();
-                //currentRoom.init();
-                //currentRoom.start();
-                break;
-            default:
-                assert false : "Room not found '" + newRoom + "'";
-                break;
         }
     }
 }

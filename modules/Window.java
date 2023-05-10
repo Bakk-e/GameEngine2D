@@ -65,12 +65,8 @@ public class Window {
         Window.currentRoom = currentRoom;
     }
 
-    public void changeRoom(int newRoom) {
-        switch (newRoom) {
-            default:
-                assert false : "Room not found '" + newRoom + "'";
-                break;
-        }
+    public void changeRoom(Room room) {
+        Window.currentRoom = room;
     }
 
     public int getWidth() {
