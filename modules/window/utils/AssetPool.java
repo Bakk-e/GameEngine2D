@@ -2,9 +2,11 @@ package HIOF.GameEnigne2D.modules.window.utils;
 
 import HIOF.GameEnigne2D.modules.object.components.Spritesheet;
 import HIOF.GameEnigne2D.modules.window.renderer.Shader;
+import HIOF.GameEnigne2D.modules.window.renderer.Sound;
 import HIOF.GameEnigne2D.modules.window.renderer.Texture;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,6 +14,7 @@ public class AssetPool {
     private static Map<String, Shader> shaders = new HashMap<>();
     private static Map<String, Texture> textures = new HashMap<>();
     private static Map<String, Spritesheet> spritesheets = new HashMap<>();
+    private static Map<String, Sound> sounds = new HashMap<>();
 
 
     //Divides the processes into HashMaps so that what should be process together is processed together. To make sure
@@ -65,5 +68,27 @@ public class AssetPool {
             assert false : "Error: Tried to access spritesheet that has not been added to asset pool";
         }
         return AssetPool.spritesheets.getOrDefault(file.getAbsolutePath(), null);
+    }
+
+    public static Sound getSound(String filepath) {
+        File file = new File(filepath);
+        if (sounds.containsKey(file.getAbsolutePath())) {
+            return sounds.get(file.getAbsolutePath());
+        } else {
+            assert false : "Sound file not added '" + filepath + "'";
+        }
+
+        return null;
+    }
+
+    public static Sound addSound(String filepath, boolean loops) {
+        File file = new File(filepath);
+        if (sounds.containsKey(file.getAbsolutePath())) {
+            return sounds.get(file.getAbsolutePath());
+        } else {
+            Sound sound = new Sound(filepath, loops);
+            AssetPool.sounds.put(file.getAbsolutePath(), sound);
+            return sound;
+        }
     }
 }

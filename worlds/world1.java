@@ -9,6 +9,7 @@ import HIOF.GameEnigne2D.modules.window.Camera;
 import HIOF.GameEnigne2D.modules.window.KeyListener;
 import HIOF.GameEnigne2D.modules.window.Room;
 import HIOF.GameEnigne2D.modules.window.Window;
+import HIOF.GameEnigne2D.modules.window.renderer.Sound;
 import HIOF.GameEnigne2D.modules.window.utils.AssetPool;
 import org.joml.Vector2f;
 
@@ -22,6 +23,7 @@ import static org.lwjgl.glfw.GLFW.*;
 public class world1 extends Room {
 
     List<Rectangle> ground;
+    int once = 0;
     public world1() {
         System.out.println("World 1");
     }
@@ -108,6 +110,13 @@ public class world1 extends Room {
                 gameObjects.get(0).changeY(-4);
             }
         }
+        if (KeyListener.isKeyPressed(GLFW_KEY_SPACE) && once == 0) {
+            once = 1;
+            Sound testSound = AssetPool.getSound("assets/sounds/1-up.ogg");
+            assert testSound != null;
+            testSound.play();
+        }
+
         if ((!KeyListener.isKeyPressed(GLFW_KEY_A) && !KeyListener.isKeyPressed(GLFW_KEY_D) &&
                 !KeyListener.isKeyPressed(GLFW_KEY_W) && !KeyListener.isKeyPressed(GLFW_KEY_S)) && !gameObjects.get(0).getCurrentState().equals("Standing")) {
             gameObjects.get(0).trigger("stop");
@@ -127,5 +136,6 @@ public class world1 extends Room {
     private void loadResources() {
         AssetPool.addSpriteSheet("assets/images/spritesheet.png", 16, 16, 26, 0);
         AssetPool.addSpriteSheet("assets/images/decorationsAndBlocks.png", 16, 16, 81, 0);
+        AssetPool.addSound("assets/sounds/1-up.ogg", false);
     }
 }

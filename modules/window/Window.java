@@ -2,10 +2,15 @@ package HIOF.GameEnigne2D.modules.window;
 
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.openal.AL;
+import org.lwjgl.openal.ALC;
+import org.lwjgl.openal.ALCCapabilities;
+import org.lwjgl.openal.ALCapabilities;
 import org.lwjgl.opengl.GL;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.openal.ALC10.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
@@ -18,6 +23,8 @@ public class Window {
     protected float r, g, b, alpha;
     protected static Window window = null;
     protected static Room currentRoom;
+    protected long audioContext;
+    protected long audioDevice;
 
 
     //This creates a basic window so that the user doesn't have to do it themselves. To actually add code you should
@@ -149,6 +156,9 @@ public class Window {
         init();
         loop();
 
+        alcDestroyContext(audioContext);
+        alcCloseDevice(audioDevice);
+
         glfwFreeCallbacks(glfwWindow);
         glfwDestroyWindow(glfwWindow);
 
@@ -184,6 +194,17 @@ public class Window {
         glfwSwapInterval(1);
 
         glfwShowWindow(glfwWindow);
+
+        String defaultDeviceName = alcGetString(0, ALC_DEFAULT_DEVICE_SPECIFIER);
+        audioDevice = alcOpenDevice(defaultDeviceName);
+        int[] attributes = {0};
+        audioContext = alcCreateContext(audioDevice, attributes);
+        alcMakeContextCurrent(audioContext);
+        ALCCapabilities alcCapabilities = ALC.createCapabilities(audioDevice);
+        ALCapabilities alCapabilities = AL.createCapabilities(alcCapabilities);
+        if (!alCapabilities.OpenAL10) {
+            assert false : "Audio library not supported";
+        }
 
         GL.createCapabilities();
 
