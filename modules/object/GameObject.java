@@ -15,7 +15,7 @@ public class GameObject {
     private Transform transform;
     private int zIndex;
     private boolean isDead = false;
-    private boolean lookingRight = true;
+    private boolean lookingRight;
 
     //Sets up gameobjects by taking in positioning, scale, and it's zIndex (which is the layer the object is put)
 
@@ -121,6 +121,11 @@ public class GameObject {
     public Rectangle getRectangle() {
         return new Rectangle((int) this.getTransform().getPosition().x, (int) this.getTransform().getPosition().y,
                 (int) this.getTransform().getScale().x, (int) this.getTransform().getScale().y);
+    }
+
+    public Rectangle getRectangleInverseWidth() {
+        return new Rectangle((int) this.getTransform().getPosition().x, (int) this.getTransform().getPosition().y,
+                (int) -this.getTransform().getScale().x, (int) this.getTransform().getScale().y);
     }
 
     public void trigger(String trigger) {

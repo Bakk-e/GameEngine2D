@@ -54,6 +54,7 @@ public class world1 extends Room {
         stateMachine.addStateTrigger(playerStanding.getTitle(), playerRunning.getTitle(), "run");
         stateMachine.addStateTrigger(playerRunning.getTitle(), playerStanding.getTitle(), "stop");
         obj1.addComponent(stateMachine);
+        obj1.setLookingRight(true);
 
 
         GameObject obj2 = new GameObject((Window.get().getWidth() / 2), (Window.get().getHeight() / 2) - 256, 128, 128, 1);
@@ -78,7 +79,7 @@ public class world1 extends Room {
 
     @Override
     public void update(float deltaTime) {
-        if (KeyListener.isKeyPressed(GLFW_KEY_A) && !Collision.intersectsXAtleastOne(gameObjects.get(0).getRectangle(), ground, - 4)) {
+        if (KeyListener.isKeyPressed(GLFW_KEY_A) && !Collision.intersectsXAtleastOne(gameObjects.get(0).getRectangleInverseWidth(), ground, -4)) {
             if (gameObjects.get(0).isLookingRight()) {
                 gameObjects.get(0).getTransform().setScale(new Vector2f(-gameObjects.get(0).getTransform().getScale().x, gameObjects.get(0).getTransform().getScale().y));
                 gameObjects.get(0).setLookingRight(false);
@@ -92,11 +93,20 @@ public class world1 extends Room {
             }
             gameObjects.get(0).changeX(4);
         }
-        if (KeyListener.isKeyPressed(GLFW_KEY_W) && !Collision.intersectsYAtleastOne(gameObjects.get(0).getRectangle(), ground, 4)) {
-            gameObjects.get(0).changeY(4);
-        }
-        if (KeyListener.isKeyPressed(GLFW_KEY_S) && !Collision.intersectsYAtleastOne(gameObjects.get(0).getRectangle(), ground, -4)) {
-            gameObjects.get(0).changeY(-4);
+        if (gameObjects.get(0).isLookingRight()) {
+            if (KeyListener.isKeyPressed(GLFW_KEY_W) && !Collision.intersectsYAtleastOne(gameObjects.get(0).getRectangle(), ground, 4)) {
+                gameObjects.get(0).changeY(4);
+            }
+            if (KeyListener.isKeyPressed(GLFW_KEY_S) && !Collision.intersectsYAtleastOne(gameObjects.get(0).getRectangle(), ground, -4)) {
+                gameObjects.get(0).changeY(-4);
+            }
+        } else {
+            if (KeyListener.isKeyPressed(GLFW_KEY_W) && !Collision.intersectsYAtleastOne(gameObjects.get(0).getRectangleInverseWidth(), ground, 4)) {
+                gameObjects.get(0).changeY(4);
+            }
+            if (KeyListener.isKeyPressed(GLFW_KEY_S) && !Collision.intersectsYAtleastOne(gameObjects.get(0).getRectangleInverseWidth(), ground, -4)) {
+                gameObjects.get(0).changeY(-4);
+            }
         }
         if ((!KeyListener.isKeyPressed(GLFW_KEY_A) && !KeyListener.isKeyPressed(GLFW_KEY_D) &&
                 !KeyListener.isKeyPressed(GLFW_KEY_W) && !KeyListener.isKeyPressed(GLFW_KEY_S)) && !gameObjects.get(0).getCurrentState().equals("Standing")) {
