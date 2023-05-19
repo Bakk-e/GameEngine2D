@@ -1,7 +1,6 @@
 package HIOF.GameEnigne2D;
 
-import HIOF.GameEnigne2D.modules.Room;
-import HIOF.GameEnigne2D.modules.Window;
+import HIOF.GameEnigne2D.modules.window.Window;
 import HIOF.GameEnigne2D.worlds.world1;
 
 
@@ -24,7 +23,7 @@ public class Game extends Window {
     //In setup, you put everything you want to happen before the game loop begins
     @Override
     public void setup() {
-        changeRoom(new world1());
+        setCurrentRoom(new world1());
     }
 
     //In update, you put all the code that is going to run every frame of your game

@@ -1,6 +1,8 @@
-package HIOF.GameEnigne2D.modules;
+package HIOF.GameEnigne2D.modules.window;
 
-import HIOF.GameEnigne2D.renderer.Renderer;
+import HIOF.GameEnigne2D.modules.object.GameObject;
+
+import HIOF.GameEnigne2D.modules.window.renderer.Renderer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +26,9 @@ public abstract class Room {
 
     public void start() {
 
-        for (GameObject go : gameObjects) {
-            go.start();
-            this.renderer.add(go);
+        for (GameObject object : gameObjects) {
+            object.start();
+            this.renderer.add(object);
         }
         isRunning = true;
     }
@@ -46,5 +48,11 @@ public abstract class Room {
 
     public Camera getCamera() {
         return camera;
+    }
+
+    public void destroyObject(int index) {
+        GameObject object = gameObjects.get(index);
+        gameObjects.remove(index);
+        this.renderer.destroyObject(object);
     }
 }

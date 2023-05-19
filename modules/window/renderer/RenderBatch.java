@@ -1,8 +1,10 @@
-package HIOF.GameEnigne2D.renderer;
+package HIOF.GameEnigne2D.modules.window.renderer;
 
-import HIOF.GameEnigne2D.components.SpriteRenderer;
-import HIOF.GameEnigne2D.modules.Window;
-import HIOF.GameEnigne2D.utils.AssetPool;
+import HIOF.GameEnigne2D.modules.object.GameObject;
+import HIOF.GameEnigne2D.modules.object.components.SpriteRenderer;
+import HIOF.GameEnigne2D.modules.window.Window;
+import HIOF.GameEnigne2D.modules.window.utils.AssetPool;
+import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
@@ -164,20 +166,38 @@ public class RenderBatch implements Comparable<RenderBatch>{
             }
         }
 
+        boolean isRotated = sprite.gameObject.getTransform().getRotation()  != 0.0f;
+        Matrix4f transformMatrix = new Matrix4f().identity();
+        if (isRotated) {
+            transformMatrix.translate(sprite.gameObject.getTransform().getPosition().x,
+                    sprite.gameObject.getTransform().getPosition().y, 0);
+            transformMatrix.rotate((float) Math.toRadians(sprite.gameObject.getTransform().getRotation()),
+                    0, 0, 1);
+            transformMatrix.scale(sprite.gameObject.getTransform().getScale().x,
+                    sprite.gameObject.getTransform().getScale().y, 1);
+        }
 
-        float xAdd = 1.0f;
-        float yAdd = 1.0f;
+        float xAdd = 0.5f;
+        float yAdd = 0.5f;
         for (int i = 0; i < 4; i++) {
             if (i == 1) {
-                yAdd = 0.0f;
+                yAdd = -0.5f;
             } else if (i == 2) {
-                xAdd = 0.0f;
+                xAdd = -0.5f;
             } else if (i == 3) {
-                yAdd = 1.0f;
+                yAdd = 0.5f;
             }
 
-            vertices[offset] = sprite.gameObject.getTransform().getPosition().x + (xAdd * sprite.gameObject.getTransform().getScale().x);
-            vertices[offset + 1] = sprite.gameObject.getTransform().getPosition().y + (yAdd * sprite.gameObject.getTransform().getScale().y);
+            Vector4f currentPosition = new Vector4f(sprite.gameObject.getTransform().getPosition().x +
+                    (xAdd * sprite.gameObject.getTransform().getScale().x), sprite.gameObject.getTransform().getPosition().y +
+                    (yAdd * sprite.gameObject.getTransform().getScale().y), 0, 1);
+
+            if (isRotated) {
+                currentPosition = new Vector4f(xAdd, yAdd, 0, 1).mul(transformMatrix);
+            }
+
+            vertices[offset] = currentPosition.x;
+            vertices[offset + 1] = currentPosition.y;
 
             vertices[offset + 2] = color.x;
             vertices[offset + 3] = color.y;
@@ -235,5 +255,21 @@ public class RenderBatch implements Comparable<RenderBatch>{
     @Override
     public int compareTo(RenderBatch o) {
         return Integer.compare(this.zIndex, o.zIndex());
+    }
+
+    public boolean destroyIfExists(GameObject object) {
+        SpriteRenderer sprite = object.getComponent(SpriteRenderer.class);
+        for (int i = 0; i < numSprites; i++) {
+            if (spriteRenderers[i] == sprite) {
+                for (int j = i; j < numSprites - 1; j++) {
+                    spriteRenderers[j] = spriteRenderers[j + 1];
+                    spriteRenderers[j].setDirty();
+                }
+                numSprites--;
+                return true;
+            }
+        }
+
+        return false;
     }
 }

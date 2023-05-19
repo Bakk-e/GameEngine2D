@@ -1,7 +1,7 @@
-package HIOF.GameEnigne2D.renderer;
+package HIOF.GameEnigne2D.modules.window.renderer;
 
-import HIOF.GameEnigne2D.components.SpriteRenderer;
-import HIOF.GameEnigne2D.modules.GameObject;
+import HIOF.GameEnigne2D.modules.object.components.SpriteRenderer;
+import HIOF.GameEnigne2D.modules.object.GameObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,6 +49,15 @@ public class Renderer {
     public void render() {
         for (RenderBatch batch : batches) {
             batch.render();
+        }
+    }
+
+    public void destroyObject(GameObject object) {
+        if (object.getComponent(SpriteRenderer.class) == null) return;
+        for (RenderBatch batch : batches) {
+            if (batch.destroyIfExists(object)) {
+                return;
+            }
         }
     }
 }

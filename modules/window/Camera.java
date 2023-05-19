@@ -1,4 +1,4 @@
-package HIOF.GameEnigne2D.modules;
+package HIOF.GameEnigne2D.modules.window;
 
 import org.joml.Matrix4f;
 import org.joml.Vector2f;

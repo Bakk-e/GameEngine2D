@@ -1,7 +1,7 @@
-package HIOF.GameEnigne2D.components;
+package HIOF.GameEnigne2D.modules.object.components;
 
-import HIOF.GameEnigne2D.modules.Component;
-import HIOF.GameEnigne2D.renderer.Texture;
+import HIOF.GameEnigne2D.modules.object.Component;
+import HIOF.GameEnigne2D.modules.window.renderer.Texture;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
@@ -52,6 +52,9 @@ public class SpriteRenderer extends Component {
     public Texture getTexture() {
         return this.sprite.getTexture();
     }
+    public void setTexture(Texture texture) {
+        this.sprite.setTexture(texture);
+    }
 
     public Vector2f[] getTextureCords() {
         return this.sprite.getTextureCords();
@@ -68,5 +71,9 @@ public class SpriteRenderer extends Component {
 
     public void setClean() {
         this.isDirty = false;
+    }
+
+    public void setDirty() {
+        this.isDirty = true;
     }
 }

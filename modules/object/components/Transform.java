@@ -1,10 +1,13 @@
-package HIOF.GameEnigne2D.components;
+package HIOF.GameEnigne2D.modules.object.components;
 
 import org.joml.Vector2f;
+
+import java.awt.*;
 
 public class Transform {
     private Vector2f position;
     private Vector2f scale;
+    private float rotation = 0.0f;
 
 
     //This creates the position and scale for a GameObject, which then is used to map where each object is on the screen and it's size
@@ -46,6 +49,14 @@ public class Transform {
     public void copy(Transform transform) {
         transform.position.set(this.position);
         transform.scale.set(this.scale);
+    }
+
+    public float getRotation() {
+        return rotation;
+    }
+
+    public void setRotation(float rotation) {
+        this.rotation = rotation;
     }
 
     @Override

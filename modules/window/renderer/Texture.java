@@ -1,4 +1,4 @@
-package HIOF.GameEnigne2D.renderer;
+package HIOF.GameEnigne2D.modules.window.renderer;
 
 import org.lwjgl.BufferUtils;
 
@@ -67,5 +67,9 @@ public class Texture {
 
     public int getHeight() {
         return height;
+    }
+
+    public String getFilepath() {
+        return filepath;
     }
 }

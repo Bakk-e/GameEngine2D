@@ -1,11 +1,15 @@
-package HIOF.GameEnigne2D.components;
+package HIOF.GameEnigne2D.modules.object.components;
 
-import HIOF.GameEnigne2D.renderer.Texture;
+import HIOF.GameEnigne2D.modules.window.renderer.Texture;
 import org.joml.Vector2f;
 
 public class Sprite {
     private Texture texture;
     private Vector2f[] textureCords;
+
+    public Sprite() {
+
+    }
 
     //Creates a new texture and maps its vertices in the correct order
     public Sprite(Texture texture) {
@@ -27,7 +31,15 @@ public class Sprite {
         return texture;
     }
 
+    public void setTexture(Texture texture) {
+        this.texture = texture;
+    }
+
     public Vector2f[] getTextureCords() {
         return this.textureCords;
+    }
+
+    public void setTextureCords(Vector2f[] textureCords) {
+        this.textureCords = textureCords;
     }
 }

@@ -1,4 +1,4 @@
-package HIOF.GameEnigne2D.renderer;
+package HIOF.GameEnigne2D.modules.window.renderer;
 
 import org.joml.*;
 import org.lwjgl.BufferUtils;

@@ -1,6 +1,6 @@
-package HIOF.GameEnigne2D.components;
+package HIOF.GameEnigne2D.modules.object.components;
 
-import HIOF.GameEnigne2D.renderer.Texture;
+import HIOF.GameEnigne2D.modules.window.renderer.Texture;
 import org.joml.Vector2f;
 
 import java.util.ArrayList;
@@ -29,11 +29,13 @@ public class Spritesheet {
                     new Vector2f(leftX, bottomY),
                     new Vector2f(leftX, topY)
             };
-            Sprite sprite = new Sprite(this.texture, textureCords);
+            Sprite sprite = new Sprite();
+            sprite.setTexture(this.texture);
+            sprite.setTextureCords(textureCords);
             this.sprites.add(sprite);
 
             currentX += spriteWidth + spacing;
-            if (currentX >= texture.getHeight()) {
+            if (currentX >= texture.getWidth()) {
                 currentX = 0;
                 currentY -= spriteHeight + spacing;
             }

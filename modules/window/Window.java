@@ -1,4 +1,4 @@
-package HIOF.GameEnigne2D.modules;
+package HIOF.GameEnigne2D.modules.window;
 
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -61,12 +61,14 @@ public class Window {
     public static Room getCurrentRoom() {
         return currentRoom;
     }
-    public static void setCurrentRoom(Room currentRoom) {
-        Window.currentRoom = currentRoom;
-    }
 
-    public void changeRoom(Room room) {
+    /**
+     * @param room room you want to set as current
+     */
+    public static void setCurrentRoom(Room room) {
         Window.currentRoom = room;
+        Window.currentRoom.start();
+        Window.currentRoom.init();
     }
 
     public int getWidth() {
@@ -219,6 +221,7 @@ public class Window {
             endTime = (float)glfwGetTime();
             deltaTime = endTime - beginTime;
             beginTime = endTime;
+
             while (glfwGetTime() < lastTime  + 1.0/fps) {
 
             }

@@ -1,8 +1,8 @@
-package HIOF.GameEnigne2D.utils;
+package HIOF.GameEnigne2D.modules.window.utils;
 
-import HIOF.GameEnigne2D.components.Spritesheet;
-import HIOF.GameEnigne2D.renderer.Shader;
-import HIOF.GameEnigne2D.renderer.Texture;
+import HIOF.GameEnigne2D.modules.object.components.Spritesheet;
+import HIOF.GameEnigne2D.modules.window.renderer.Shader;
+import HIOF.GameEnigne2D.modules.window.renderer.Texture;
 
 import java.io.File;
 import java.util.HashMap;
@@ -48,8 +48,8 @@ public class AssetPool {
      * @param spacing spacing between sprites
      */
     public static void addSpriteSheet(String resourceName, int spriteWidth, int spriteHeight, int numberOfSprites, int spacing) {
-        File file = new File(resourceName);
         Spritesheet spritesheet = new Spritesheet(AssetPool.getTexture(resourceName), spriteWidth, spriteHeight, numberOfSprites, spacing);
+        File file = new File(resourceName);
         if (!AssetPool.spritesheets.containsKey(file.getAbsolutePath())) {
             AssetPool.spritesheets.put(file.getAbsolutePath(), spritesheet);
         }

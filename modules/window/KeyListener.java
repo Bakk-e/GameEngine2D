@@ -1,4 +1,4 @@
-package HIOF.GameEnigne2D.modules;
+package HIOF.GameEnigne2D.modules.window;
 
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;

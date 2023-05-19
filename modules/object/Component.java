@@ -1,4 +1,4 @@
-package HIOF.GameEnigne2D.modules;
+package HIOF.GameEnigne2D.modules.object;
 
 public abstract class Component {
     public GameObject gameObject = null;
@@ -10,4 +10,8 @@ public abstract class Component {
     }
 
     public abstract void update(float deltaTime);
+
+    public void destroy() {
+
+    };
 }
