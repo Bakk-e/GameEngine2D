@@ -55,4 +55,10 @@ public abstract class Room {
         gameObjects.remove(index);
         this.renderer.destroyObject(object);
     }
+
+    public void updateObjects(float deltatime) {
+        for (GameObject object : gameObjects) {
+            object.update(deltatime);
+        }
+    }
 }

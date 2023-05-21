@@ -1,5 +1,8 @@
 package HIOF.GameEnigne2D.modules.object.components;
 
+import HIOF.GameEnigne2D.Game;
+import HIOF.GameEnigne2D.modules.object.GameObject;
+
 import java.awt.*;
 import java.util.List;
 
@@ -38,18 +41,18 @@ public class Collision {
         );
     }
 
-    public static boolean intersectsXAtleastOne(Rectangle rect1, List<Rectangle> rectangles, int x) {
-        for (Rectangle rect2 : rectangles) {
-            if (intersectsX(rect1, rect2, x)) {
+    public static boolean intersectsXAtleastOne(Rectangle rect1, List<GameObject> objects, int x) {
+        for (GameObject object : objects) {
+            if (intersectsX(rect1, object.getRectangle(), x)) {
                 return true;
             }
         }
         return false;
     }
 
-    public static boolean intersectsYAtleastOne(Rectangle rect1, List<Rectangle> rectangles, int y) {
-        for (Rectangle rect2 : rectangles) {
-            if (intersectsY(rect1, rect2, y)) {
+    public static boolean intersectsYAtleastOne(Rectangle rect1, List<GameObject> objects, int y) {
+        for (GameObject object : objects) {
+            if (intersectsY(rect1, object.getRectangle(), y)) {
                 return true;
             }
         }

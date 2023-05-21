@@ -22,7 +22,7 @@ import static org.lwjgl.glfw.GLFW.*;
 
 public class world1 extends Room {
 
-    List<Rectangle> ground;
+    List<GameObject> ground;
     int once = 0;
     public world1() {
         System.out.println("World 1");
@@ -34,12 +34,13 @@ public class world1 extends Room {
         Window.get().setColor(1.0f, 1.0f, 1.0f);
         this.camera = new Camera(0, 0);
 
-        Spritesheet playerSprites = AssetPool.getSpritesheet("assets/images/spritesheet.png");
+        Spritesheet playerSprites = AssetPool.getSpritesheet("assets/images/marioSpritesheet.png");
         Spritesheet blockSprites = AssetPool.getSpritesheet("assets/images/decorationsAndBlocks.png");
 
         GameObject obj1 = new GameObject((Window.get().getWidth() / 2), (Window.get().getHeight() / 2), 128, 128, 1);
         obj1.addSprite(playerSprites.getSprite(0));
         this.addGameObject(obj1);
+
         AnimationState playerStanding = new AnimationState();
         playerStanding.setTitle("Standing");
         playerStanding.addFrame(playerSprites.getSprite(0), 0f);
@@ -56,6 +57,7 @@ public class world1 extends Room {
         stateMachine.addStateTrigger(playerStanding.getTitle(), playerRunning.getTitle(), "run");
         stateMachine.addStateTrigger(playerRunning.getTitle(), playerStanding.getTitle(), "stop");
         obj1.addComponent(stateMachine);
+
         obj1.setLookingRight(true);
 
 
@@ -73,10 +75,10 @@ public class world1 extends Room {
         this.addGameObject(obj5);
 
         ground = new ArrayList<>();
-        ground.add(gameObjects.get(1).getRectangle());
-        ground.add(gameObjects.get(2).getRectangle());
-        ground.add(gameObjects.get(3).getRectangle());
-        ground.add(gameObjects.get(4).getRectangle());
+        ground.add(gameObjects.get(1));
+        ground.add(gameObjects.get(2));
+        ground.add(gameObjects.get(3));
+        ground.add(gameObjects.get(4));
     }
 
     @Override
@@ -123,7 +125,6 @@ public class world1 extends Room {
         } else if ((KeyListener.isKeyPressed(GLFW_KEY_A) || KeyListener.isKeyPressed(GLFW_KEY_D) ||
                 KeyListener.isKeyPressed(GLFW_KEY_W) || KeyListener.isKeyPressed(GLFW_KEY_S)) && !gameObjects.get(0).getCurrentState().equals("Running")) {
             gameObjects.get(0).trigger("run");
-
         }
 
         //System.out.println("FPS: " + (1.0f / deltaTime));
@@ -134,7 +135,7 @@ public class world1 extends Room {
     }
 
     private void loadResources() {
-        AssetPool.addSpriteSheet("assets/images/spritesheet.png", 16, 16, 26, 0);
+        AssetPool.addSpriteSheet("assets/images/marioSpritesheet.png", 16, 16, 26, 0);
         AssetPool.addSpriteSheet("assets/images/decorationsAndBlocks.png", 16, 16, 81, 0);
         AssetPool.addSound("assets/sounds/1-up.ogg", false);
     }
