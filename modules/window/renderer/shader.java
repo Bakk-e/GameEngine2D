@@ -12,7 +12,7 @@ import static org.lwjgl.opengl.GL11.GL_FALSE;
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL20.glGetShaderInfoLog;
 
-public class Shader {
+public class shader {
 
     private int shaderProgramID;
     private boolean beingUsed = false;
@@ -22,7 +22,7 @@ public class Shader {
 
 
     //Creates the shader by getting the code written in default.glsl, which is then passed on
-    public Shader(String filepath) {
+    public shader(String filepath) {
         this.filepath = filepath;
         try {
             String source = new String(Files.readAllBytes(Paths.get(filepath)));

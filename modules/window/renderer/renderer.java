@@ -1,34 +1,34 @@
 package HIOF.GameEnigne2D.modules.window.renderer;
 
-import HIOF.GameEnigne2D.modules.object.components.SpriteRenderer;
-import HIOF.GameEnigne2D.modules.object.GameObject;
+import HIOF.GameEnigne2D.modules.object.components.spriterenderer;
+import HIOF.GameEnigne2D.modules.object.gameobject;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Renderer {
+public class renderer {
     private final int maxBatchSize = 1000;
-    private List<RenderBatch> batches;
+    private List<renderbatch> batches;
 
 
     //Creates batches and adds sprites to later be rendered by the corresponding RenderBatch
-    public Renderer() {
+    public renderer() {
         this.batches = new ArrayList<>();
     }
 
-    public void add(GameObject go) {
-        SpriteRenderer sprite = go.getComponent(SpriteRenderer.class);
+    public void add(gameobject go) {
+        spriterenderer sprite = go.getComponent(spriterenderer.class);
         if (sprite != null) {
             add(sprite);
         }
     }
 
-    private void add(SpriteRenderer spriteRenderer) {
+    private void add(spriterenderer spriteRenderer) {
         boolean added = false;
-        for (RenderBatch batch : batches) {
+        for (renderbatch batch : batches) {
             if (batch.hasRoom() && batch.zIndex() == spriteRenderer.gameObject.zIndex()) {
-                Texture texture = spriteRenderer.getTexture();
+                texture texture = spriteRenderer.getTexture();
                 if (texture == null || (batch.hasSprite(texture) || batch.hasSpriteRoom())) {
                     batch.addSprite(spriteRenderer);
                     added = true;
@@ -38,7 +38,7 @@ public class Renderer {
         }
 
         if (!added) {
-            RenderBatch newBatch = new RenderBatch(maxBatchSize, spriteRenderer.gameObject.zIndex());
+            renderbatch newBatch = new renderbatch(maxBatchSize, spriteRenderer.gameObject.zIndex());
             newBatch.start();
             batches.add(newBatch);
             newBatch.addSprite(spriteRenderer);
@@ -47,14 +47,14 @@ public class Renderer {
     }
 
     public void render() {
-        for (RenderBatch batch : batches) {
+        for (renderbatch batch : batches) {
             batch.render();
         }
     }
 
-    public void destroyObject(GameObject object) {
-        if (object.getComponent(SpriteRenderer.class) == null) return;
-        for (RenderBatch batch : batches) {
+    public void destroyObject(gameobject object) {
+        if (object.getComponent(spriterenderer.class) == null) return;
+        for (renderbatch batch : batches) {
             if (batch.destroyIfExists(object)) {
                 return;
             }

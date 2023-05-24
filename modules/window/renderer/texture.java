@@ -8,14 +8,14 @@ import java.nio.IntBuffer;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.stb.STBImage.*;
 
-public class Texture {
+public class texture {
     private String filepath;
     private int textureID;
     private int width, height;
 
 
     //Creates a texture and splits the colors into channels to be processed later
-    public Texture(String filepath) {
+    public texture(String filepath) {
         this.filepath = filepath;
 
         textureID = glGenTextures();

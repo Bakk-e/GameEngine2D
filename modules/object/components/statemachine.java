@@ -1,13 +1,13 @@
 package HIOF.GameEnigne2D.modules.object.components;
 
-import HIOF.GameEnigne2D.modules.object.Component;
+import HIOF.GameEnigne2D.modules.object.component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-public class StateMachine extends Component {
+public class statemachine extends component {
     private class StateTrigger {
         private String state;
         private String trigger;
@@ -38,12 +38,12 @@ public class StateMachine extends Component {
         }
     }
     private HashMap<StateTrigger, String> stateTransfers = new HashMap<>();
-    private List<AnimationState> states = new ArrayList<>();
-    private transient AnimationState currentState = null;
+    private List<animationState> states = new ArrayList<>();
+    private transient animationState currentState = null;
     private String defaultStateTitle = "";
 
     public void refreshTextures() {
-        for (AnimationState state : states) {
+        for (animationState state : states) {
             state.refreshTextures();
         }
     }
@@ -52,7 +52,7 @@ public class StateMachine extends Component {
         this.stateTransfers.put(new StateTrigger(from, onTrigger), to);
     }
 
-    public void addState(AnimationState state) {
+    public void addState(animationState state) {
         this.states.add(state);
     }
 
@@ -75,7 +75,7 @@ public class StateMachine extends Component {
 
     private int stateIndexOf(String stateTitle) {
         int index = 0;
-        for (AnimationState state : states) {
+        for (animationState state : states) {
             if (state.getTitle().equals(stateTitle)) {
                 return index;
             }
@@ -86,7 +86,7 @@ public class StateMachine extends Component {
     }
 
     public void setDefaultState(String animationTitle) {
-        for (AnimationState state : states) {
+        for (animationState state : states) {
             if (state.getTitle().equals(animationTitle)) {
                 defaultStateTitle = animationTitle;
                 if (currentState == null) {
@@ -100,7 +100,7 @@ public class StateMachine extends Component {
 
     @Override
     public void start() {
-        for (AnimationState state : states) {
+        for (animationState state : states) {
             if (state.getTitle().equals(defaultStateTitle)) {
                 currentState = state;
                 break;
@@ -112,7 +112,7 @@ public class StateMachine extends Component {
     public void update(float deltaTime) {
         if (currentState != null) {
             currentState.update(deltaTime);
-            SpriteRenderer sprite = gameObject.getComponent(SpriteRenderer.class);
+            spriterenderer sprite = gameObject.getComponent(spriterenderer.class);
             if (sprite != null) {
                 sprite.setSprite(currentState.getCurrentSprite());
                 sprite.setTexture(currentState.getCurrentSprite().getTexture());
@@ -124,11 +124,11 @@ public class StateMachine extends Component {
         return stateTransfers;
     }
 
-    public List<AnimationState> getStates() {
+    public List<animationState> getStates() {
         return states;
     }
 
-    public AnimationState getCurrentState() {
+    public animationState getCurrentState() {
         return currentState;
     }
 }

@@ -1,44 +1,43 @@
 package HIOF.GameEnigne2D.modules.window.utils;
 
-import HIOF.GameEnigne2D.modules.object.components.Spritesheet;
-import HIOF.GameEnigne2D.modules.window.renderer.Shader;
-import HIOF.GameEnigne2D.modules.window.renderer.Sound;
-import HIOF.GameEnigne2D.modules.window.renderer.Texture;
+import HIOF.GameEnigne2D.modules.object.components.spritesheet;
+import HIOF.GameEnigne2D.modules.window.renderer.shader;
+import HIOF.GameEnigne2D.modules.window.renderer.sound;
+import HIOF.GameEnigne2D.modules.window.renderer.texture;
 
 import java.io.File;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AssetPool {
-    private static Map<String, Shader> shaders = new HashMap<>();
-    private static Map<String, Texture> textures = new HashMap<>();
-    private static Map<String, Spritesheet> spritesheets = new HashMap<>();
-    private static Map<String, Sound> sounds = new HashMap<>();
+public class assetpool {
+    private static Map<String, shader> shaders = new HashMap<>();
+    private static Map<String, texture> textures = new HashMap<>();
+    private static Map<String, spritesheet> spritesheets = new HashMap<>();
+    private static Map<String, sound> sounds = new HashMap<>();
 
 
     //Divides the processes into HashMaps so that what should be process together is processed together. To make sure
     // the rendering is as efficient as possible
-    public static Shader getShader() {
+    public static shader getShader() {
         String resourceName = "assets/shaders/default.glsl";
         File file = new File(resourceName);
         if (shaders.containsKey(file.getAbsolutePath())) {
             return shaders.get(file.getAbsolutePath());
         } else {
-            Shader shader = new Shader(resourceName);
+            shader shader = new shader(resourceName);
             shader.compileAndLink();
-            AssetPool.shaders.put(file.getAbsolutePath(), shader);
+            assetpool.shaders.put(file.getAbsolutePath(), shader);
             return shader;
         }
     }
 
-    public static Texture getTexture(String resourceName) {
+    public static texture getTexture(String resourceName) {
         File file = new File(resourceName);
-        if (AssetPool.textures.containsKey(file.getAbsolutePath())) {
-            return AssetPool.textures.get(file.getAbsolutePath());
+        if (assetpool.textures.containsKey(file.getAbsolutePath())) {
+            return assetpool.textures.get(file.getAbsolutePath());
         } else {
-            Texture texture = new Texture(resourceName);
-            AssetPool.textures.put(file.getAbsolutePath(), texture);
+            texture texture = new texture(resourceName);
+            assetpool.textures.put(file.getAbsolutePath(), texture);
             return texture;
         }
     }
@@ -51,10 +50,10 @@ public class AssetPool {
      * @param spacing spacing between sprites
      */
     public static void addSpriteSheet(String resourceName, int spriteWidth, int spriteHeight, int numberOfSprites, int spacing) {
-        Spritesheet spritesheet = new Spritesheet(AssetPool.getTexture(resourceName), spriteWidth, spriteHeight, numberOfSprites, spacing);
+        spritesheet spritesheet = new spritesheet(assetpool.getTexture(resourceName), spriteWidth, spriteHeight, numberOfSprites, spacing);
         File file = new File(resourceName);
-        if (!AssetPool.spritesheets.containsKey(file.getAbsolutePath())) {
-            AssetPool.spritesheets.put(file.getAbsolutePath(), spritesheet);
+        if (!assetpool.spritesheets.containsKey(file.getAbsolutePath())) {
+            assetpool.spritesheets.put(file.getAbsolutePath(), spritesheet);
         }
     }
 
@@ -62,15 +61,15 @@ public class AssetPool {
      * @param resourceName filepath
      * @return list of sprites
      */
-    public static Spritesheet getSpritesheet(String resourceName) {
+    public static spritesheet getSpritesheet(String resourceName) {
         File file = new File(resourceName);
-        if (!AssetPool.spritesheets.containsKey(file.getAbsolutePath())) {
+        if (!assetpool.spritesheets.containsKey(file.getAbsolutePath())) {
             assert false : "Error: Tried to access spritesheet that has not been added to asset pool";
         }
-        return AssetPool.spritesheets.getOrDefault(file.getAbsolutePath(), null);
+        return assetpool.spritesheets.getOrDefault(file.getAbsolutePath(), null);
     }
 
-    public static Sound getSound(String filepath) {
+    public static sound getSound(String filepath) {
         File file = new File(filepath);
         if (sounds.containsKey(file.getAbsolutePath())) {
             return sounds.get(file.getAbsolutePath());
@@ -81,13 +80,13 @@ public class AssetPool {
         return null;
     }
 
-    public static Sound addSound(String filepath, boolean loops) {
+    public static sound addSound(String filepath, boolean loops) {
         File file = new File(filepath);
         if (sounds.containsKey(file.getAbsolutePath())) {
             return sounds.get(file.getAbsolutePath());
         } else {
-            Sound sound = new Sound(filepath, loops);
-            AssetPool.sounds.put(file.getAbsolutePath(), sound);
+            sound sound = new sound(filepath, loops);
+            assetpool.sounds.put(file.getAbsolutePath(), sound);
             return sound;
         }
     }

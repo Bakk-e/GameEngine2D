@@ -1,28 +1,28 @@
 package HIOF.GameEnigne2D.modules.object;
 
-import HIOF.GameEnigne2D.modules.object.components.Sprite;
-import HIOF.GameEnigne2D.modules.object.components.SpriteRenderer;
-import HIOF.GameEnigne2D.modules.object.components.StateMachine;
-import HIOF.GameEnigne2D.modules.object.components.Transform;
+import HIOF.GameEnigne2D.modules.object.components.sprite;
+import HIOF.GameEnigne2D.modules.object.components.spriterenderer;
+import HIOF.GameEnigne2D.modules.object.components.statemachine;
+import HIOF.GameEnigne2D.modules.object.components.transform;
 import org.joml.Vector2f;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameObject {
-    private List<Component> components;
-    private Transform transform;
+public class gameobject {
+    private List<component> components;
+    private HIOF.GameEnigne2D.modules.object.components.transform transform;
     private int zIndex;
     private boolean isDead = false;
     private boolean lookingRight;
 
     //Sets up gameobjects by taking in positioning, scale, and it's zIndex (which is the layer the object is put)
 
-    public GameObject() {
+    public gameobject() {
         this.zIndex = 0;
         this.components = new ArrayList<>();
-        this.transform = new Transform();
+        this.transform = new transform();
     }
 
     /**
@@ -32,14 +32,14 @@ public class GameObject {
      * @param height width of sprite
      * @param zIndex layer
      */
-    public GameObject(int x, int y, int width, int height, int zIndex) {
+    public gameobject(int x, int y, int width, int height, int zIndex) {
         this.zIndex = zIndex;
         this.components = new ArrayList<>();
-        this.transform = new Transform(new Vector2f(x, y), new Vector2f(width, height));
+        this.transform = new transform(new Vector2f(x, y), new Vector2f(width, height));
     }
 
-    public <T extends Component> T getComponent(Class<T> componentClass) {
-        for (Component c : components) {
+    public <T extends component> T getComponent(Class<T> componentClass) {
+        for (component c : components) {
             if (componentClass.isAssignableFrom(c.getClass())) {
                 try {
                     return componentClass.cast(c);
@@ -52,9 +52,9 @@ public class GameObject {
         return null;
     }
 
-    public <T extends Component> void removeComponent(Class<T> componentClass) {
+    public <T extends component> void removeComponent(Class<T> componentClass) {
         for (int i = 0; i < components.size(); i++) {
-            Component c = components.get(i);
+            component c = components.get(i);
             if (componentClass.isAssignableFrom(c.getClass())) {
                 components.remove(i);
                 return;
@@ -65,13 +65,13 @@ public class GameObject {
     /**
      * @param component new SpriteRenderer
      */
-    public void addComponent(Component component) {
+    public void addComponent(component component) {
         this.components.add(component);
         component.gameObject = this;
     }
 
-    public void addSprite(Sprite sprite) {
-        addComponent(new SpriteRenderer(sprite));
+    public void addSprite(sprite sprite) {
+        addComponent(new spriterenderer(sprite));
     }
 
     public void update(float deltaTime) {
@@ -86,10 +86,10 @@ public class GameObject {
         }
     }
 
-    public Transform getTransform() {
+    public HIOF.GameEnigne2D.modules.object.components.transform getTransform() {
         return transform;
     }
-    public void setTransform(Transform transform) {
+    public void setTransform(HIOF.GameEnigne2D.modules.object.components.transform transform) {
         this.transform = transform;
     }
 
@@ -129,11 +129,11 @@ public class GameObject {
     }
 
     public void trigger(String trigger) {
-        getComponent(StateMachine.class).trigger(trigger);
+        getComponent(statemachine.class).trigger(trigger);
     }
 
     public String getCurrentState() {
-        return getComponent(StateMachine.class).getCurrentState().getTitle();
+        return getComponent(statemachine.class).getCurrentState().getTitle();
     }
 
     public boolean isLookingRight() {

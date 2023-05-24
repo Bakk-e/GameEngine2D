@@ -1,23 +1,23 @@
 package HIOF.GameEnigne2D.modules.window;
 
-import HIOF.GameEnigne2D.modules.object.GameObject;
+import HIOF.GameEnigne2D.modules.object.gameobject;
 
-import HIOF.GameEnigne2D.modules.window.renderer.Renderer;
+import HIOF.GameEnigne2D.modules.window.renderer.renderer;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Room {
+public abstract class room {
 
-    protected Renderer renderer = new Renderer();
-    protected Camera camera;
+    protected HIOF.GameEnigne2D.modules.window.renderer.renderer renderer = new renderer();
+    protected HIOF.GameEnigne2D.modules.window.camera camera;
     private boolean isRunning = false;
-    protected List<GameObject> gameObjects = new ArrayList<>();
+    protected List<gameobject> gameobjects = new ArrayList<>();
 
 
     //This is a base for all other rooms, it renders objects and lets you add GameObjects to the room. When creating a
     // child of this you have to override update and init function to add your own code
-    public Room() {
+    public room() {
 
     }
 
@@ -26,7 +26,7 @@ public abstract class Room {
 
     public void start() {
 
-        for (GameObject object : gameObjects) {
+        for (gameobject object : gameobjects) {
             object.start();
             this.renderer.add(object);
         }
@@ -36,28 +36,28 @@ public abstract class Room {
     /**
      * @param object GameObject
      */
-    public void addGameObject(GameObject object) {
+    public void addGameObject(gameobject object) {
         if (!isRunning) {
-            gameObjects.add(object);
+            gameobjects.add(object);
         } else {
-            gameObjects.add(object);
+            gameobjects.add(object);
             object.start();
             this.renderer.add(object);
         }
     }
 
-    public Camera getCamera() {
+    public HIOF.GameEnigne2D.modules.window.camera getCamera() {
         return camera;
     }
 
     public void destroyObject(int index) {
-        GameObject object = gameObjects.get(index);
-        gameObjects.remove(index);
+        gameobject object = gameobjects.get(index);
+        gameobjects.remove(index);
         this.renderer.destroyObject(object);
     }
 
     public void updateObjects(float deltatime) {
-        for (GameObject object : gameObjects) {
+        for (gameobject object : gameobjects) {
             object.update(deltatime);
         }
     }

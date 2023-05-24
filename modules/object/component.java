@@ -1,7 +1,7 @@
 package HIOF.GameEnigne2D.modules.object;
 
-public abstract class Component {
-    public GameObject gameObject = null;
+public abstract class component {
+    public gameobject gameObject = null;
 
 
     //This is used as a base for all the components that can be put on and be used by a GameObject

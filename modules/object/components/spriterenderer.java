@@ -1,26 +1,26 @@
 package HIOF.GameEnigne2D.modules.object.components;
 
-import HIOF.GameEnigne2D.modules.object.Component;
-import HIOF.GameEnigne2D.modules.window.renderer.Texture;
+import HIOF.GameEnigne2D.modules.object.component;
+import HIOF.GameEnigne2D.modules.window.renderer.texture;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
-public class SpriteRenderer extends Component {
+public class spriterenderer extends component {
     private Vector4f color;
-    private Sprite sprite;
-    private Transform lastTransform;
+    private HIOF.GameEnigne2D.modules.object.components.sprite sprite;
+    private transform lastTransform;
     private boolean isDirty = true;
 
     //Takes the sprite object and makes sure the object's position and scale is updated per frame
-    public SpriteRenderer(Vector4f color) {
+    public spriterenderer(Vector4f color) {
         this.color = color;
-        this.sprite = new Sprite(null);
+        this.sprite = new sprite(null);
     }
 
     /**
      * @param sprite sprite object
      */
-    public SpriteRenderer(Sprite sprite) {
+    public spriterenderer(HIOF.GameEnigne2D.modules.object.components.sprite sprite) {
         this.sprite = sprite;
         this.color = new Vector4f(1, 1, 1, 1);
     }
@@ -49,10 +49,10 @@ public class SpriteRenderer extends Component {
 
     }
 
-    public Texture getTexture() {
+    public texture getTexture() {
         return this.sprite.getTexture();
     }
-    public void setTexture(Texture texture) {
+    public void setTexture(texture texture) {
         this.sprite.setTexture(texture);
     }
 
@@ -60,7 +60,7 @@ public class SpriteRenderer extends Component {
         return this.sprite.getTextureCords();
     }
 
-    public void setSprite(Sprite sprite) {
+    public void setSprite(HIOF.GameEnigne2D.modules.object.components.sprite sprite) {
         this.sprite = sprite;
         isDirty = true;
     }

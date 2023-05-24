@@ -1,9 +1,9 @@
 package HIOF.GameEnigne2D.modules.window.renderer;
 
-import HIOF.GameEnigne2D.modules.object.GameObject;
-import HIOF.GameEnigne2D.modules.object.components.SpriteRenderer;
-import HIOF.GameEnigne2D.modules.window.Window;
-import HIOF.GameEnigne2D.modules.window.utils.AssetPool;
+import HIOF.GameEnigne2D.modules.object.gameobject;
+import HIOF.GameEnigne2D.modules.object.components.spriterenderer;
+import HIOF.GameEnigne2D.modules.window.window;
+import HIOF.GameEnigne2D.modules.window.utils.assetpool;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -16,7 +16,7 @@ import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
-public class RenderBatch implements Comparable<RenderBatch>{
+public class renderbatch implements Comparable<renderbatch>{
     private final int positionSize = 2;
     private final int colorSize = 4;
     private final int spriteCordsSize = 2;
@@ -28,24 +28,24 @@ public class RenderBatch implements Comparable<RenderBatch>{
     private final int vertexSize = 9;
     private final int vertexSizeBytes = vertexSize * Float.BYTES;
 
-    private SpriteRenderer[] spriteRenderers;
+    private spriterenderer[] spriterenderers;
     private int numSprites;
     private boolean hasRoom;
     private float[] vertices;
     private int[] textureSlots = {0, 1, 2, 3, 4, 5 ,6 ,7};
 
-    private List<Texture> textures;
+    private List<texture> textures;
     private int vaoID, vboID;
     private int maxBatchSize;
-    private Shader shader;
+    private HIOF.GameEnigne2D.modules.window.renderer.shader shader;
     private int zIndex;
 
 
-    public RenderBatch(int maxBatchSize, int zIndex) {
+    public renderbatch(int maxBatchSize, int zIndex) {
         this.zIndex = zIndex;
-        shader = AssetPool.getShader();
+        shader = assetpool.getShader();
         shader.compileAndLink();
-        this.spriteRenderers = new SpriteRenderer[maxBatchSize];
+        this.spriterenderers = new spriterenderer[maxBatchSize];
         this.maxBatchSize = maxBatchSize;
 
         vertices = new float[maxBatchSize * 4 * vertexSize];
@@ -84,9 +84,9 @@ public class RenderBatch implements Comparable<RenderBatch>{
     }
 
     //Adds sprites to the RenderBatches as long as they don't already exist
-    public void addSprite(SpriteRenderer sprite) {
+    public void addSprite(spriterenderer sprite) {
         int index = this.numSprites;
-        this.spriteRenderers[index] = sprite;
+        this.spriterenderers[index] = sprite;
         this.numSprites++;
 
         if (sprite.getTexture() != null) {
@@ -109,7 +109,7 @@ public class RenderBatch implements Comparable<RenderBatch>{
     public void render() {
         boolean rebufferData = false;
         for (int i = 0; i < numSprites; i++) {
-            SpriteRenderer spriteR = spriteRenderers[i];
+            spriterenderer spriteR = spriterenderers[i];
             if (spriteR.isDirty()) {
                 loadVertexProperties(i);
                 spriteR.setClean();
@@ -123,8 +123,8 @@ public class RenderBatch implements Comparable<RenderBatch>{
         }
 
         shader.use();
-        shader.uploadMat4f("uProjectionMatrix", Window.getCurrentRoom().getCamera().getProjectionMatrix());
-        shader.uploadMat4f("uViewMatrix", Window.getCurrentRoom().getCamera().getViewMatrix());
+        shader.uploadMat4f("uProjectionMatrix", window.getCurrentRoom().getCamera().getProjectionMatrix());
+        shader.uploadMat4f("uViewMatrix", window.getCurrentRoom().getCamera().getViewMatrix());
         for (int i = 0; i < textures.size(); i++) {
             glActiveTexture(GL_TEXTURE0 + i + 1);
             textures.get(i).bind();
@@ -149,7 +149,7 @@ public class RenderBatch implements Comparable<RenderBatch>{
 
     //Calculates the vertices of the sprite to locate where the triangles that make up the sprite are
     private void loadVertexProperties(int index) {
-        SpriteRenderer sprite = this.spriteRenderers[index];
+        spriterenderer sprite = this.spriterenderers[index];
 
         int offset = index * 4 * vertexSize;
 
@@ -244,7 +244,7 @@ public class RenderBatch implements Comparable<RenderBatch>{
         return this.textures.size() < 8;
     }
 
-    public boolean hasSprite(Texture texture) {
+    public boolean hasSprite(texture texture) {
         return this.textures.contains(texture);
     }
 
@@ -253,17 +253,17 @@ public class RenderBatch implements Comparable<RenderBatch>{
     }
 
     @Override
-    public int compareTo(RenderBatch o) {
+    public int compareTo(renderbatch o) {
         return Integer.compare(this.zIndex, o.zIndex());
     }
 
-    public boolean destroyIfExists(GameObject object) {
-        SpriteRenderer sprite = object.getComponent(SpriteRenderer.class);
+    public boolean destroyIfExists(gameobject object) {
+        spriterenderer sprite = object.getComponent(spriterenderer.class);
         for (int i = 0; i < numSprites; i++) {
-            if (spriteRenderers[i] == sprite) {
+            if (spriterenderers[i] == sprite) {
                 for (int j = i; j < numSprites - 1; j++) {
-                    spriteRenderers[j] = spriteRenderers[j + 1];
-                    spriteRenderers[j].setDirty();
+                    spriterenderers[j] = spriterenderers[j + 1];
+                    spriterenderers[j].setDirty();
                 }
                 numSprites--;
                 return true;

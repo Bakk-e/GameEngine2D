@@ -8,13 +8,13 @@ import static org.lwjgl.stb.STBVorbis.stb_vorbis_decode_filename;
 import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.libc.LibCStdlib.free;
 
-public class Sound {
+public class sound {
     private int bufferId;
     public int sourceId;
     private String filepath;
     private boolean isPlaying = false;
 
-    public Sound(String filepath, boolean loops) {
+    public sound(String filepath, boolean loops) {
         this.filepath = filepath;
 
         stackPush();

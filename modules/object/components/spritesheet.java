@@ -1,18 +1,17 @@
 package HIOF.GameEnigne2D.modules.object.components;
 
-import HIOF.GameEnigne2D.modules.window.renderer.Texture;
 import org.joml.Vector2f;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Spritesheet {
-    private Texture texture;
-    private List<Sprite> sprites;
+public class spritesheet {
+    private HIOF.GameEnigne2D.modules.window.renderer.texture texture;
+    private List<sprite> sprites;
 
 
     //Takes a sprite sheet and inputs of the size of each sprite and then maps out each sprite for later use
-    public Spritesheet(Texture texture, int spriteWidth, int spriteHeight, int numSprites, int spacing) {
+    public spritesheet(HIOF.GameEnigne2D.modules.window.renderer.texture texture, int spriteWidth, int spriteHeight, int numSprites, int spacing) {
         this.sprites = new ArrayList<>();
         this.texture = texture;
         int currentX = 0;
@@ -29,7 +28,7 @@ public class Spritesheet {
                     new Vector2f(leftX, bottomY),
                     new Vector2f(leftX, topY)
             };
-            Sprite sprite = new Sprite();
+            sprite sprite = new sprite();
             sprite.setTexture(this.texture);
             sprite.setTextureCords(textureCords);
             this.sprites.add(sprite);
@@ -46,7 +45,7 @@ public class Spritesheet {
      * @param index index of the sprite
      * @return sprite object
      */
-    public Sprite getSprite(int index) {
+    public sprite getSprite(int index) {
         return this.sprites.get(index);
     }
 }
