@@ -1,20 +1,20 @@
-package HIOF.GameEnigne2D.modules.object.components;
+package hiof.gameenigne2d.modules.object.components;
 
-import HIOF.GameEnigne2D.modules.window.utils.assetpool;
+import hiof.gameenigne2d.modules.window.utils.AssetPool;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class animationState {
+public class AnimationState {
     private String title;
-    private List<frame> animationFrames = new ArrayList<>();
-    private static sprite defaultSprite = new sprite();
+    private List<Frame> animationFrames = new ArrayList<>();
+    private static Sprite defaultSprite = new Sprite();
     private float timeTracker = 0.0f;
     private transient int currentSprite = 0;
     private boolean doesLoop = false;
 
-    public void addFrame(sprite sprite, float frameTime) {
-        animationFrames.add(new frame(sprite, frameTime));
+    public void addFrame(Sprite sprite, float frameTime) {
+        animationFrames.add(new Frame(sprite, frameTime));
     }
 
     public void setDoesLoop(boolean doesLoop) {
@@ -33,7 +33,7 @@ public class animationState {
         }
     }
 
-    public sprite getCurrentSprite() {
+    public Sprite getCurrentSprite() {
         if (currentSprite < animationFrames.size()) {
             return animationFrames.get(currentSprite).getSprite();
         }
@@ -49,8 +49,8 @@ public class animationState {
     }
 
     public void refreshTextures() {
-        for (HIOF.GameEnigne2D.modules.object.components.frame frame : animationFrames) {
-            frame.getSprite().setTexture(assetpool.getTexture(frame.getSprite().getTexture().getFilepath()));
+        for (Frame frame : animationFrames) {
+            frame.getSprite().setTexture(AssetPool.getTexture(frame.getSprite().getTexture().getFilepath()));
         }
     }
 }

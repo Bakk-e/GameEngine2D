@@ -1,4 +1,4 @@
-package HIOF.GameEnigne2D.modules.window.renderer;
+package hiof.gameenigne2d.modules.window.renderer;
 
 import java.nio.IntBuffer;
 import java.nio.ShortBuffer;
@@ -8,13 +8,13 @@ import static org.lwjgl.stb.STBVorbis.stb_vorbis_decode_filename;
 import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.libc.LibCStdlib.free;
 
-public class sound {
+public class Sound {
     private int bufferId;
     public int sourceId;
     private String filepath;
     private boolean isPlaying = false;
 
-    public sound(String filepath, boolean loops) {
+    public Sound(String filepath, boolean loops) {
         this.filepath = filepath;
 
         stackPush();

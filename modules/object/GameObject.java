@@ -1,28 +1,28 @@
-package HIOF.GameEnigne2D.modules.object;
+package hiof.gameenigne2d.modules.object;
 
-import HIOF.GameEnigne2D.modules.object.components.sprite;
-import HIOF.GameEnigne2D.modules.object.components.spriterenderer;
-import HIOF.GameEnigne2D.modules.object.components.statemachine;
-import HIOF.GameEnigne2D.modules.object.components.transform;
+import hiof.gameenigne2d.modules.object.components.Sprite;
+import hiof.gameenigne2d.modules.object.components.SpriteRenderer;
+import hiof.gameenigne2d.modules.object.components.StateMachine;
+import hiof.gameenigne2d.modules.object.components.Transform;
 import org.joml.Vector2f;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class gameobject {
-    private List<component> components;
-    private HIOF.GameEnigne2D.modules.object.components.transform transform;
+public class GameObject {
+    private List<Component> Components;
+    private Transform transform;
     private int zIndex;
     private boolean isDead = false;
     private boolean lookingRight;
 
     //Sets up gameobjects by taking in positioning, scale, and it's zIndex (which is the layer the object is put)
 
-    public gameobject() {
+    public GameObject() {
         this.zIndex = 0;
-        this.components = new ArrayList<>();
-        this.transform = new transform();
+        this.Components = new ArrayList<>();
+        this.transform = new Transform();
     }
 
     /**
@@ -32,14 +32,14 @@ public class gameobject {
      * @param height width of sprite
      * @param zIndex layer
      */
-    public gameobject(int x, int y, int width, int height, int zIndex) {
+    public GameObject(int x, int y, int width, int height, int zIndex) {
         this.zIndex = zIndex;
-        this.components = new ArrayList<>();
-        this.transform = new transform(new Vector2f(x, y), new Vector2f(width, height));
+        this.Components = new ArrayList<>();
+        this.transform = new Transform(new Vector2f(x, y), new Vector2f(width, height));
     }
 
-    public <T extends component> T getComponent(Class<T> componentClass) {
-        for (component c : components) {
+    public <T extends Component> T getComponent(Class<T> componentClass) {
+        for (Component c : Components) {
             if (componentClass.isAssignableFrom(c.getClass())) {
                 try {
                     return componentClass.cast(c);
@@ -52,11 +52,11 @@ public class gameobject {
         return null;
     }
 
-    public <T extends component> void removeComponent(Class<T> componentClass) {
-        for (int i = 0; i < components.size(); i++) {
-            component c = components.get(i);
+    public <T extends Component> void removeComponent(Class<T> componentClass) {
+        for (int i = 0; i < Components.size(); i++) {
+            Component c = Components.get(i);
             if (componentClass.isAssignableFrom(c.getClass())) {
-                components.remove(i);
+                Components.remove(i);
                 return;
             }
         }
@@ -65,31 +65,31 @@ public class gameobject {
     /**
      * @param component new SpriteRenderer
      */
-    public void addComponent(component component) {
-        this.components.add(component);
+    public void addComponent(Component component) {
+        this.Components.add(component);
         component.gameObject = this;
     }
 
-    public void addSprite(sprite sprite) {
-        addComponent(new spriterenderer(sprite));
+    public void addSprite(Sprite sprite) {
+        addComponent(new SpriteRenderer(sprite));
     }
 
     public void update(float deltaTime) {
-        for (int i = 0; i < components.size(); i++) {
-            components.get(i).update(deltaTime);
+        for (int i = 0; i < Components.size(); i++) {
+            Components.get(i).update(deltaTime);
         }
     }
 
     public void start() {
-        for (int i = 0; i < components.size(); i++) {
-            components.get(i).start();
+        for (int i = 0; i < Components.size(); i++) {
+            Components.get(i).start();
         }
     }
 
-    public HIOF.GameEnigne2D.modules.object.components.transform getTransform() {
+    public Transform getTransform() {
         return transform;
     }
-    public void setTransform(HIOF.GameEnigne2D.modules.object.components.transform transform) {
+    public void setTransform(Transform transform) {
         this.transform = transform;
     }
 
@@ -113,8 +113,8 @@ public class gameobject {
 
     public void destroy() {
         this.isDead = true;
-        for (int i = 0; i < components.size(); i++) {
-            components.get(i).destroy();
+        for (int i = 0; i < Components.size(); i++) {
+            Components.get(i).destroy();
         }
     }
 
@@ -129,11 +129,11 @@ public class gameobject {
     }
 
     public void trigger(String trigger) {
-        getComponent(statemachine.class).trigger(trigger);
+        getComponent(StateMachine.class).trigger(trigger);
     }
 
     public String getCurrentState() {
-        return getComponent(statemachine.class).getCurrentState().getTitle();
+        return getComponent(StateMachine.class).getCurrentState().getTitle();
     }
 
     public boolean isLookingRight() {

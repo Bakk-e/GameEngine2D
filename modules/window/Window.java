@@ -1,4 +1,4 @@
-package HIOF.GameEnigne2D.modules.window;
+package hiof.gameenigne2d.modules.window;
 
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -14,29 +14,29 @@ import static org.lwjgl.openal.ALC10.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
-public class window {
+public class Window {
     protected int width;
     protected int height;
     protected String title;
     protected double fps;
     protected long glfwWindow;
     protected float r, g, b, alpha;
-    protected static HIOF.GameEnigne2D.modules.window.window window = null;
-    protected static room currentRoom;
+    protected static Window window = null;
+    protected static Room currentRoom;
     protected long audioContext;
     protected long audioDevice;
 
 
     //This creates a basic window so that the user doesn't have to do it themselves. To actually add code you should
     // create a child object and override changeRoom, setup and update
-    protected window() {
+    protected Window() {
         this.r = 0;
         this.g = 0;
         this.b = 0;
         this.alpha = 1;
     }
 
-    protected window(int width, int height, String title, double fps) {
+    protected Window(int width, int height, String title, double fps) {
         this.width = width;
         this.height = height;
         this.title = title;
@@ -47,35 +47,35 @@ public class window {
         this.alpha = 1;
     }
 
-    public static HIOF.GameEnigne2D.modules.window.window get() {
-        return HIOF.GameEnigne2D.modules.window.window.window;
+    public static Window get() {
+        return Window.window;
     }
 
-    public static HIOF.GameEnigne2D.modules.window.window create() {
-        if (HIOF.GameEnigne2D.modules.window.window.window == null) {
-            HIOF.GameEnigne2D.modules.window.window.window = new window();
+    public static Window create() {
+        if (Window.window == null) {
+            Window.window = new Window();
         }
-        return HIOF.GameEnigne2D.modules.window.window.window;
+        return Window.window;
     }
 
-    public static HIOF.GameEnigne2D.modules.window.window create(int width, int height, String title, double fps) {
-        if (HIOF.GameEnigne2D.modules.window.window.window == null) {
-            HIOF.GameEnigne2D.modules.window.window.window = new window(width, height, title, fps);
+    public static Window create(int width, int height, String title, double fps) {
+        if (Window.window == null) {
+            Window.window = new Window(width, height, title, fps);
         }
-        return HIOF.GameEnigne2D.modules.window.window.window;
+        return Window.window;
     }
 
-    public static room getCurrentRoom() {
+    public static Room getCurrentRoom() {
         return currentRoom;
     }
 
     /**
      * @param room room you want to set as current
      */
-    public static void setCurrentRoom(room room) {
-        HIOF.GameEnigne2D.modules.window.window.currentRoom = room;
-        HIOF.GameEnigne2D.modules.window.window.currentRoom.start();
-        HIOF.GameEnigne2D.modules.window.window.currentRoom.init();
+    public static void setCurrentRoom(Room room) {
+        Window.currentRoom = room;
+        Window.currentRoom.start();
+        Window.currentRoom.init();
     }
 
     public int getWidth() {
@@ -185,10 +185,10 @@ public class window {
             throw new IllegalStateException("Failed to create the GLFW window");
         }
 
-        glfwSetCursorPosCallback(glfwWindow, mouselistener::mousePosCallback);
-        glfwSetMouseButtonCallback(glfwWindow, mouselistener::mouseButtonCallback);
-        glfwSetScrollCallback(glfwWindow, mouselistener::mouseScrollCallback);
-        glfwSetKeyCallback(glfwWindow, keylistener::keyCallback);
+        glfwSetCursorPosCallback(glfwWindow, MouseListener::mousePosCallback);
+        glfwSetMouseButtonCallback(glfwWindow, MouseListener::mouseButtonCallback);
+        glfwSetScrollCallback(glfwWindow, MouseListener::mouseScrollCallback);
+        glfwSetKeyCallback(glfwWindow, KeyListener::keyCallback);
 
         glfwMakeContextCurrent(glfwWindow);
         glfwSwapInterval(1);

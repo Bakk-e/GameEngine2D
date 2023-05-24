@@ -1,24 +1,24 @@
-package HIOF.GameEnigne2D.modules.window;
+package hiof.gameenigne2d.modules.window;
 
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
-public class keylistener {
-    private static keylistener instance;
+public class KeyListener {
+    private static KeyListener instance;
     private boolean keyPressed[] = new boolean[350];
 
 
     //This takes in the GLFW keyCodes and processes them
-    private keylistener() {
+    private KeyListener() {
 
     }
 
-    public static keylistener get() {
-        if (keylistener.instance == null) {
-            keylistener.instance = new keylistener();
+    public static KeyListener get() {
+        if (KeyListener.instance == null) {
+            KeyListener.instance = new KeyListener();
         }
 
-        return keylistener.instance;
+        return KeyListener.instance;
     }
 
     public static void keyCallback(long window, int key, int scanCode, int action, int mods) {

@@ -1,16 +1,16 @@
-package HIOF.GameEnigne2D.worlds;
+package hiof.gameenigne2d.worlds;
 
-import HIOF.GameEnigne2D.modules.object.components.animationState;
-import HIOF.GameEnigne2D.modules.object.components.collision;
-import HIOF.GameEnigne2D.modules.object.components.spritesheet;
-import HIOF.GameEnigne2D.modules.object.gameobject;
-import HIOF.GameEnigne2D.modules.object.components.statemachine;
-import HIOF.GameEnigne2D.modules.window.camera;
-import HIOF.GameEnigne2D.modules.window.keylistener;
-import HIOF.GameEnigne2D.modules.window.room;
-import HIOF.GameEnigne2D.modules.window.window;
-import HIOF.GameEnigne2D.modules.window.renderer.sound;
-import HIOF.GameEnigne2D.modules.window.utils.assetpool;
+import hiof.gameenigne2d.modules.object.components.AnimationState;
+import hiof.gameenigne2d.modules.object.components.Collision;
+import hiof.gameenigne2d.modules.object.components.Spritesheet;
+import hiof.gameenigne2d.modules.object.GameObject;
+import hiof.gameenigne2d.modules.object.components.StateMachine;
+import hiof.gameenigne2d.modules.window.Camera;
+import hiof.gameenigne2d.modules.window.KeyListener;
+import hiof.gameenigne2d.modules.window.Room;
+import hiof.gameenigne2d.modules.window.Window;
+import hiof.gameenigne2d.modules.window.renderer.Sound;
+import hiof.gameenigne2d.modules.window.utils.AssetPool;
 import org.joml.Vector2f;
 
 import java.util.ArrayList;
@@ -19,9 +19,9 @@ import java.util.List;
 import static org.lwjgl.glfw.GLFW.*;
 
 
-public class world1 extends room {
+public class world1 extends Room {
 
-    List<gameobject> ground;
+    List<GameObject> ground;
     int once = 0;
     public world1() {
         System.out.println("World 1");
@@ -30,26 +30,26 @@ public class world1 extends room {
     @Override
     public void init() {
         loadResources();
-        window.get().setColor(1.0f, 1.0f, 1.0f);
-        this.camera = new camera(0, 0);
+        Window.get().setColor(1.0f, 1.0f, 1.0f);
+        this.camera = new Camera(0, 0);
 
-        spritesheet playerSprites = assetpool.getSpritesheet("assets/images/marioSpritesheet.png");
-        spritesheet blockSprites = assetpool.getSpritesheet("assets/images/decorationsAndBlocks.png");
+        Spritesheet playerSprites = AssetPool.getSpritesheet("assets/images/marioSpritesheet.png");
+        Spritesheet blockSprites = AssetPool.getSpritesheet("assets/images/decorationsAndBlocks.png");
 
-        gameobject obj1 = new gameobject((window.get().getWidth() / 2), (window.get().getHeight() / 2), 128, 128, 1);
+        GameObject obj1 = new GameObject((Window.get().getWidth() / 2), (Window.get().getHeight() / 2), 128, 128, 1);
         obj1.addSprite(playerSprites.getSprite(0));
         this.addGameObject(obj1);
 
-        animationState playerStanding = new animationState();
+        AnimationState playerStanding = new AnimationState();
         playerStanding.setTitle("Standing");
         playerStanding.addFrame(playerSprites.getSprite(0), 0f);
-        animationState playerRunning = new animationState();
+        AnimationState playerRunning = new AnimationState();
         playerRunning.setTitle("Running");
         playerRunning.addFrame(playerSprites.getSprite(1), 0.23f);
         playerRunning.addFrame(playerSprites.getSprite(2), 0.23f);
         playerRunning.addFrame(playerSprites.getSprite(3), 0.23f);
         playerRunning.setDoesLoop(true);
-        statemachine stateMachine = new statemachine();
+        StateMachine stateMachine = new StateMachine();
         stateMachine.addState(playerStanding);
         stateMachine.addState(playerRunning);
         stateMachine.setDefaultState(playerStanding.getTitle());
@@ -60,82 +60,82 @@ public class world1 extends room {
         obj1.setLookingRight(true);
 
 
-        gameobject obj2 = new gameobject((window.get().getWidth() / 2), (window.get().getHeight() / 2) - 256, 128, 128, 1);
+        GameObject obj2 = new GameObject((Window.get().getWidth() / 2), (Window.get().getHeight() / 2) - 256, 128, 128, 1);
         obj2.addSprite(blockSprites.getSprite(8));
         this.addGameObject(obj2);
-        gameobject obj3 = new gameobject((window.get().getWidth() / 2) + 128, (window.get().getHeight() / 2) - 256, 128, 128, 1);
+        GameObject obj3 = new GameObject((Window.get().getWidth() / 2) + 128, (Window.get().getHeight() / 2) - 256, 128, 128, 1);
         obj3.addSprite(blockSprites.getSprite(8));
         this.addGameObject(obj3);
-        gameobject obj4 = new gameobject((window.get().getWidth() / 2) + 256, (window.get().getHeight() / 2) - 256, 128, 128, 1);
+        GameObject obj4 = new GameObject((Window.get().getWidth() / 2) + 256, (Window.get().getHeight() / 2) - 256, 128, 128, 1);
         obj4.addSprite(blockSprites.getSprite(8));
         this.addGameObject(obj4);
-        gameobject obj5 = new gameobject((window.get().getWidth() / 2)+ 256, (window.get().getHeight() / 2) - 256 + 128, 128, 128, 1);
+        GameObject obj5 = new GameObject((Window.get().getWidth() / 2)+ 256, (Window.get().getHeight() / 2) - 256 + 128, 128, 128, 1);
         obj5.addSprite(blockSprites.getSprite(8));
         this.addGameObject(obj5);
 
         ground = new ArrayList<>();
-        ground.add(gameobjects.get(1));
-        ground.add(gameobjects.get(2));
-        ground.add(gameobjects.get(3));
-        ground.add(gameobjects.get(4));
+        ground.add(GameObjects.get(1));
+        ground.add(GameObjects.get(2));
+        ground.add(GameObjects.get(3));
+        ground.add(GameObjects.get(4));
     }
 
     @Override
     public void update(float deltaTime) {
-        if (keylistener.isKeyPressed(GLFW_KEY_A) && !collision.intersectsXAtleastOne(gameobjects.get(0).getRectangleInverseWidth(), ground, -4)) {
-            if (gameobjects.get(0).isLookingRight()) {
-                gameobjects.get(0).getTransform().setScale(new Vector2f(-gameobjects.get(0).getTransform().getScale().x, gameobjects.get(0).getTransform().getScale().y));
-                gameobjects.get(0).setLookingRight(false);
+        if (KeyListener.isKeyPressed(GLFW_KEY_A) && !Collision.intersectsXAtleastOne(GameObjects.get(0).getRectangleInverseWidth(), ground, -4)) {
+            if (GameObjects.get(0).isLookingRight()) {
+                GameObjects.get(0).getTransform().setScale(new Vector2f(-GameObjects.get(0).getTransform().getScale().x, GameObjects.get(0).getTransform().getScale().y));
+                GameObjects.get(0).setLookingRight(false);
             }
-            gameobjects.get(0).changeX(-4);
+            GameObjects.get(0).changeX(-4);
         }
-        if (keylistener.isKeyPressed(GLFW_KEY_D) && !collision.intersectsXAtleastOne(gameobjects.get(0).getRectangle(), ground, 4)) {
-            if (!gameobjects.get(0).isLookingRight()) {
-                gameobjects.get(0).getTransform().setScale(new Vector2f(-gameobjects.get(0).getTransform().getScale().x, gameobjects.get(0).getTransform().getScale().y));
-                gameobjects.get(0).setLookingRight(true);
+        if (KeyListener.isKeyPressed(GLFW_KEY_D) && !Collision.intersectsXAtleastOne(GameObjects.get(0).getRectangle(), ground, 4)) {
+            if (!GameObjects.get(0).isLookingRight()) {
+                GameObjects.get(0).getTransform().setScale(new Vector2f(-GameObjects.get(0).getTransform().getScale().x, GameObjects.get(0).getTransform().getScale().y));
+                GameObjects.get(0).setLookingRight(true);
             }
-            gameobjects.get(0).changeX(4);
+            GameObjects.get(0).changeX(4);
         }
-        if (gameobjects.get(0).isLookingRight()) {
-            if (keylistener.isKeyPressed(GLFW_KEY_W) && !collision.intersectsYAtleastOne(gameobjects.get(0).getRectangle(), ground, 4)) {
-                gameobjects.get(0).changeY(4);
+        if (GameObjects.get(0).isLookingRight()) {
+            if (KeyListener.isKeyPressed(GLFW_KEY_W) && !Collision.intersectsYAtleastOne(GameObjects.get(0).getRectangle(), ground, 4)) {
+                GameObjects.get(0).changeY(4);
             }
-            if (keylistener.isKeyPressed(GLFW_KEY_S) && !collision.intersectsYAtleastOne(gameobjects.get(0).getRectangle(), ground, -4)) {
-                gameobjects.get(0).changeY(-4);
+            if (KeyListener.isKeyPressed(GLFW_KEY_S) && !Collision.intersectsYAtleastOne(GameObjects.get(0).getRectangle(), ground, -4)) {
+                GameObjects.get(0).changeY(-4);
             }
         } else {
-            if (keylistener.isKeyPressed(GLFW_KEY_W) && !collision.intersectsYAtleastOne(gameobjects.get(0).getRectangleInverseWidth(), ground, 4)) {
-                gameobjects.get(0).changeY(4);
+            if (KeyListener.isKeyPressed(GLFW_KEY_W) && !Collision.intersectsYAtleastOne(GameObjects.get(0).getRectangleInverseWidth(), ground, 4)) {
+                GameObjects.get(0).changeY(4);
             }
-            if (keylistener.isKeyPressed(GLFW_KEY_S) && !collision.intersectsYAtleastOne(gameobjects.get(0).getRectangleInverseWidth(), ground, -4)) {
-                gameobjects.get(0).changeY(-4);
+            if (KeyListener.isKeyPressed(GLFW_KEY_S) && !Collision.intersectsYAtleastOne(GameObjects.get(0).getRectangleInverseWidth(), ground, -4)) {
+                GameObjects.get(0).changeY(-4);
             }
         }
-        if (keylistener.isKeyPressed(GLFW_KEY_SPACE) && once == 0) {
+        if (KeyListener.isKeyPressed(GLFW_KEY_SPACE) && once == 0) {
             once = 1;
-            sound testSound = assetpool.getSound("assets/sounds/1-up.ogg");
+            Sound testSound = AssetPool.getSound("assets/sounds/1-up.ogg");
             assert testSound != null;
             testSound.play();
         }
 
-        if ((!keylistener.isKeyPressed(GLFW_KEY_A) && !keylistener.isKeyPressed(GLFW_KEY_D) &&
-                !keylistener.isKeyPressed(GLFW_KEY_W) && !keylistener.isKeyPressed(GLFW_KEY_S)) && !gameobjects.get(0).getCurrentState().equals("Standing")) {
-            gameobjects.get(0).trigger("stop");
-        } else if ((keylistener.isKeyPressed(GLFW_KEY_A) || keylistener.isKeyPressed(GLFW_KEY_D) ||
-                keylistener.isKeyPressed(GLFW_KEY_W) || keylistener.isKeyPressed(GLFW_KEY_S)) && !gameobjects.get(0).getCurrentState().equals("Running")) {
-            gameobjects.get(0).trigger("run");
+        if ((!KeyListener.isKeyPressed(GLFW_KEY_A) && !KeyListener.isKeyPressed(GLFW_KEY_D) &&
+                !KeyListener.isKeyPressed(GLFW_KEY_W) && !KeyListener.isKeyPressed(GLFW_KEY_S)) && !GameObjects.get(0).getCurrentState().equals("Standing")) {
+            GameObjects.get(0).trigger("stop");
+        } else if ((KeyListener.isKeyPressed(GLFW_KEY_A) || KeyListener.isKeyPressed(GLFW_KEY_D) ||
+                KeyListener.isKeyPressed(GLFW_KEY_W) || KeyListener.isKeyPressed(GLFW_KEY_S)) && !GameObjects.get(0).getCurrentState().equals("Running")) {
+            GameObjects.get(0).trigger("run");
         }
 
         //System.out.println("FPS: " + (1.0f / deltaTime));
-        for (gameobject object : this.gameobjects) {
+        for (GameObject object : this.GameObjects) {
             object.update(deltaTime);
         }
         this.renderer.render();
     }
 
     private void loadResources() {
-        assetpool.addSpriteSheet("assets/images/marioSpritesheet.png", 16, 16, 26, 0);
-        assetpool.addSpriteSheet("assets/images/decorationsAndBlocks.png", 16, 16, 81, 0);
-        assetpool.addSound("assets/sounds/1-up.ogg", false);
+        AssetPool.addSpriteSheet("assets/images/marioSpritesheet.png", 16, 16, 26, 0);
+        AssetPool.addSpriteSheet("assets/images/decorationsAndBlocks.png", 16, 16, 81, 0);
+        AssetPool.addSound("assets/sounds/1-up.ogg", false);
     }
 }

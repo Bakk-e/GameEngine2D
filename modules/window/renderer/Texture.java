@@ -1,4 +1,4 @@
-package HIOF.GameEnigne2D.modules.window.renderer;
+package hiof.gameenigne2d.modules.window.renderer;
 
 import org.lwjgl.BufferUtils;
 
@@ -8,14 +8,14 @@ import java.nio.IntBuffer;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.stb.STBImage.*;
 
-public class texture {
+public class Texture {
     private String filepath;
     private int textureID;
     private int width, height;
 
 
     //Creates a texture and splits the colors into channels to be processed later
-    public texture(String filepath) {
+    public Texture(String filepath) {
         this.filepath = filepath;
 
         textureID = glGenTextures();

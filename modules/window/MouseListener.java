@@ -1,9 +1,9 @@
-package HIOF.GameEnigne2D.modules.window;
+package hiof.gameenigne2d.modules.window;
 
 import static org.lwjgl.glfw.GLFW.*;
 
-public class mouselistener {
-    private static mouselistener instance;
+public class MouseListener {
+    private static MouseListener instance;
     private double scrollX, scrollY, xPos, yPos, lastX, lastY;
     private boolean mouseButtonPressed[] = new boolean[3];
     private boolean drag;
@@ -11,7 +11,7 @@ public class mouselistener {
 
     //This isn't functioning right now but will later be used to allow mouse actions
 
-    private mouselistener() {
+    private MouseListener() {
         this.scrollX = 0.0;
         this.scrollY = 0.0;
         this.xPos = 0.0;
@@ -20,12 +20,12 @@ public class mouselistener {
         this.lastY = 0.0;
     }
 
-    public static mouselistener get() {
-        if (mouselistener.instance == null) {
-            mouselistener.instance = new mouselistener();
+    public static MouseListener get() {
+        if (MouseListener.instance == null) {
+            MouseListener.instance = new MouseListener();
         }
 
-        return mouselistener.instance;
+        return MouseListener.instance;
     }
 
     public static void mousePosCallback(long window, double xPos, double yPos) {

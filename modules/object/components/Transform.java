@@ -1,23 +1,23 @@
-package HIOF.GameEnigne2D.modules.object.components;
+package hiof.gameenigne2d.modules.object.components;
 
 import org.joml.Vector2f;
 
-public class transform {
+public class Transform {
     private Vector2f position;
     private Vector2f scale;
     private float rotation = 0.0f;
 
 
     //This creates the position and scale for a GameObject, which then is used to map where each object is on the screen and it's size
-    public transform() {
+    public Transform() {
         init(new Vector2f(), new Vector2f());
     }
 
-    public transform(Vector2f position) {
+    public Transform(Vector2f position) {
         init(position, new Vector2f());
     }
 
-    public transform(Vector2f position, Vector2f scale) {
+    public Transform(Vector2f position, Vector2f scale) {
         init(position, scale);
     }
 
@@ -40,11 +40,11 @@ public class transform {
         this.scale = scale;
     }
 
-    public transform copy() {
-        return new transform(new Vector2f(this.position), new Vector2f(this.scale));
+    public Transform copy() {
+        return new Transform(new Vector2f(this.position), new Vector2f(this.scale));
     }
 
-    public void copy(transform transform) {
+    public void copy(Transform transform) {
         transform.position.set(this.position);
         transform.scale.set(this.scale);
     }
@@ -60,9 +60,9 @@ public class transform {
     @Override
     public boolean equals(Object object) {
         if (object == null) return false;
-        if (!(object instanceof transform)) return false;
+        if (!(object instanceof Transform)) return false;
 
-        transform transform = (HIOF.GameEnigne2D.modules.object.components.transform)object;
+        Transform transform = (Transform)object;
         return transform.position.equals(this.position) && transform.scale.equals(this.scale);
     }
 }

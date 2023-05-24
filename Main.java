@@ -1,10 +1,10 @@
-package HIOF.GameEnigne2D;
+package hiof.gameenigne2d;
 
-import HIOF.GameEnigne2D.modules.window.window;
+import hiof.gameenigne2d.modules.window.Window;
 
 public class Main {
     public static void main(String[] args) {
-        window window = Game.create(1920, 1080, "Test", 60.0);
+        Window window = Game.create(1920, 1080, "Test", 60.0);
 
         window.run();
     }

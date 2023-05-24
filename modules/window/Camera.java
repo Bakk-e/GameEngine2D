@@ -1,10 +1,10 @@
-package HIOF.GameEnigne2D.modules.window;
+package hiof.gameenigne2d.modules.window;
 
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
-public class camera {
+public class Camera {
     private Matrix4f projectionMatrix, viewMatrix;
     private Vector2f position;
 
@@ -12,11 +12,11 @@ public class camera {
      * @param x x position
      * @param y y position
      */
-    public camera(int x, int y) {
+    public Camera(int x, int y) {
         this.position = new Vector2f(x, y);
         this.projectionMatrix = new Matrix4f();
         this.viewMatrix = new Matrix4f();
-        adjustProjection(window.window.getWidth(), window.window.getHeight());
+        adjustProjection(Window.window.getWidth(), Window.window.getHeight());
     }
 
 
@@ -28,7 +28,7 @@ public class camera {
      */
     //Camera is given its projection and its view, here it is set so that it only does 2 dimensions. But can be
     // transfigured to do 3 dimensions with some work since its using OpenGL
-    public camera(int x, int y, int width , int height) {
+    public Camera(int x, int y, int width , int height) {
         this.position = new Vector2f(x, y);
         this.projectionMatrix = new Matrix4f();
         this.viewMatrix = new Matrix4f();

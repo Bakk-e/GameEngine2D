@@ -1,4 +1,4 @@
-package HIOF.GameEnigne2D.modules.window.renderer;
+package hiof.gameenigne2d.modules.window.renderer;
 
 import org.joml.*;
 import org.lwjgl.BufferUtils;
@@ -12,7 +12,7 @@ import static org.lwjgl.opengl.GL11.GL_FALSE;
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL20.glGetShaderInfoLog;
 
-public class shader {
+public class Shader {
 
     private int shaderProgramID;
     private boolean beingUsed = false;
@@ -22,7 +22,7 @@ public class shader {
 
 
     //Creates the shader by getting the code written in default.glsl, which is then passed on
-    public shader(String filepath) {
+    public Shader(String filepath) {
         this.filepath = filepath;
         try {
             String source = new String(Files.readAllBytes(Paths.get(filepath)));
