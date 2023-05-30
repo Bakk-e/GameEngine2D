@@ -9,8 +9,9 @@ public class Camera {
     private Vector2f position;
 
     /**
-     * @param x x position
-     * @param y y position
+     * Creates a new camera/viewport as big as the Window
+     * @param x x-axis position
+     * @param y y-axis position
      */
     public Camera(int x, int y) {
         this.position = new Vector2f(x, y);
@@ -21,10 +22,11 @@ public class Camera {
 
 
     /**
-     * @param x x position
-     * @param y y position
-     * @param width width in pixels
-     * @param height height in pixels
+     * Creates a new camera/viewport
+     * @param x x-axis position
+     * @param y y-axis position
+     * @param width in pixels
+     * @param height in pixels
      */
     //Camera is given its projection and its view, here it is set so that it only does 2 dimensions. But can be
     // transfigured to do 3 dimensions with some work since its using OpenGL
@@ -35,6 +37,11 @@ public class Camera {
         adjustProjection(width, height);
     }
 
+    /**
+     * Adjusts the projection matrix for the camera
+     * @param width in pixels
+     * @param height in pixels
+     */
     public void adjustProjection(int width, int height) {
         projectionMatrix.identity();
         projectionMatrix.ortho(0.0f, (float)width, 0.0f, (float)height, 0.0f, 100.0f);

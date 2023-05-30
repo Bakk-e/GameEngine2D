@@ -46,6 +46,9 @@ public class Renderer {
         }
     }
 
+    /**
+     * Starts the renderer that renders the images to screen
+     */
     public void render() {
         for (RenderBatch batch : batches) {
             batch.render();

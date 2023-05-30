@@ -33,9 +33,17 @@ public class Transform {
         this.position = position;
     }
 
+    /**
+     * @return returns the scale of the object (width and height)
+     */
     public Vector2f getScale() {
         return scale;
     }
+
+    /**
+     * Sets the scale of the GameObject as the parameter
+     * @param scale object that contains width and height
+     */
     public void setScale(Vector2f scale) {
         this.scale = scale;
     }

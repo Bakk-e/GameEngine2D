@@ -61,16 +61,28 @@ public class MouseListener {
         get().lastY = get().yPos;
     }
 
+    /**
+     * @return returns the X-axis position of the mouse
+     */
     public static float getX() {
         return (float)get().xPos;
     }
+    /**
+     * @return returns the Y-axis position of the mouse
+     */
     public static float getY() {
         return (float)get().yPos;
     }
-    public static float getDx() {
+    /**
+     * @return returns the space between the previous X-axis position and the current position of the mouse
+     */
+    public static float getDX() {
         return (float)(get().lastX - get().xPos);
     }
-    public static float getDy() {
+    /**
+     * @return returns the space between the previous Y-axis position and the current position of the mouse
+     */
+    public static float getDY() {
         return (float)(get().lastY - get().yPos);
     }
 
@@ -85,6 +97,11 @@ public class MouseListener {
         return get().drag;
     }
 
+    /**
+     * Checks if the given mouse button is pressed
+     * @param button is a variable that corresponds to a button on the mouse
+     * @return returns a boolean if it's pressed or not
+     */
     public static boolean mouseButtonDown(int button) {
         if (button < get().mouseButtonPressed.length) {
             return get().mouseButtonPressed[button];

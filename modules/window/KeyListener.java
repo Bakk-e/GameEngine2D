@@ -7,8 +7,6 @@ public class KeyListener {
     private static KeyListener instance;
     private boolean keyPressed[] = new boolean[350];
 
-
-    //This takes in the GLFW keyCodes and processes them
     private KeyListener() {
 
     }
@@ -29,6 +27,11 @@ public class KeyListener {
         }
     }
 
+    /**
+     * Checks if the given keycode is pressed
+     * @param keyCode is a variable that corresponds to a key on the keyboard
+     * @return returns a boolean if it's pressed or not
+     */
     public static boolean isKeyPressed(int keyCode) {
         return get().keyPressed[keyCode];
     }

@@ -11,7 +11,14 @@ public class Spritesheet {
     private List<Sprite> Sprites;
 
 
-    //Takes a sprite sheet and inputs of the size of each sprite and then maps out each sprite for later use
+    /**
+     * Takes a sprite sheet and inputs of the size of each sprite and then maps out each sprite for later use
+     * @param texture the image you want to give it
+     * @param spriteWidth each sprites width
+     * @param spriteHeight each sprites height
+     * @param numSprites the number of sprites in the image
+     * @param spacing in between the sprites
+     */
     public Spritesheet(Texture texture, int spriteWidth, int spriteHeight, int numSprites, int spacing) {
         this.Sprites = new ArrayList<>();
         this.texture = texture;

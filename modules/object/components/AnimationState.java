@@ -13,10 +13,26 @@ public class AnimationState {
     private transient int currentSprite = 0;
     private boolean doesLoop = false;
 
+    /**
+     * Creates a state for animation that contains a list of Sprites/Frames
+     */
+    public AnimationState() {
+
+    }
+
+    /**
+     * Adds a sprite as a frame to the animation state frame list
+     * @param sprite Sprite object to be added as the frame
+     * @param frameTime time in between each frame/sprite
+     */
     public void addFrame(Sprite sprite, float frameTime) {
         animationFrames.add(new Frame(sprite, frameTime));
     }
 
+    /**
+     * Sets if the animation state loops or not
+     * @param doesLoop boolean for if animation loops
+     */
     public void setDoesLoop(boolean doesLoop) {
         this.doesLoop = doesLoop;
     }
@@ -41,9 +57,17 @@ public class AnimationState {
         return defaultSprite;
     }
 
+    /**
+     * @return returns the title of the animation state
+     */
     public String getTitle() {
         return title;
     }
+
+    /**
+     * Sets the tile of the animation state
+     * @param title the string that is set as title
+     */
     public void setTitle(String title) {
         this.title = title;
     }

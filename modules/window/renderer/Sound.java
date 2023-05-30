@@ -14,6 +14,11 @@ public class Sound {
     private String filepath;
     private boolean isPlaying = false;
 
+    /**
+     * Creates an object with the sound of the filepath and sets if it loops
+     * @param filepath sound filepath
+     * @param loops if the sound loops or not
+     */
     public Sound(String filepath, boolean loops) {
         this.filepath = filepath;
 
@@ -55,11 +60,17 @@ public class Sound {
         free(rawAudioBuffer);
     }
 
+    /**
+     * Deletes the sound
+     */
     public void delete() {
         alDeleteSources(sourceId);
         alDeleteBuffers(bufferId);
     }
 
+    /**
+     * Plays the sound object
+     */
     public void play() {
         int state = alGetSourcei(sourceId, AL_SOURCE_STATE);
         if (state == AL_STOPPED) {
@@ -73,6 +84,9 @@ public class Sound {
         }
     }
 
+    /**
+     * Stops the sound object
+     */
     public void stop() {
         if (isPlaying) {
             alSourceStop(sourceId);
@@ -80,10 +94,16 @@ public class Sound {
         }
     }
 
+    /**
+     * @return returns the filepath of the sound
+     */
     public String getFilepath() {
         return  this.filepath;
     }
 
+    /**
+     * @return returns if the sound object is playing or not
+     */
     public boolean isPlaying() {
         int state = alGetSourcei(sourceId, AL_SOURCE_STATE);
         if (state == AL_STOPPED) {

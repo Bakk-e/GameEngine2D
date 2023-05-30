@@ -42,16 +42,37 @@ public class StateMachine extends Component {
     private transient AnimationState currentState = null;
     private String defaultStateTitle = "";
 
+    /**
+     * Creates a state machine that holds all the animation states that belongs to the GameObject
+     * and manages the trigger that switch between them
+     */
+    public StateMachine() {
+
+    }
+
+    /**
+     * Refreshes the textures in the animation state
+     */
     public void refreshTextures() {
         for (AnimationState state : states) {
             state.refreshTextures();
         }
     }
 
+    /**
+     * Adds a trigger that changes from one state to another and gives it a name
+     * @param from animation state that is changed from
+     * @param to animation state that is changed to
+     * @param onTrigger name of the trigger
+     */
     public void addStateTrigger(String from, String to, String onTrigger) {
         this.stateTransfers.put(new StateTrigger(from, onTrigger), to);
     }
 
+    /**
+     * Adds an animation state to the GameObjects state machine
+     * @param state the animation state to be added
+     */
     public void addState(AnimationState state) {
         this.states.add(state);
     }
@@ -85,6 +106,10 @@ public class StateMachine extends Component {
         return -1;
     }
 
+    /**
+     * Sets the default animation state of the state machine
+     * @param animationTitle the name of the animation state
+     */
     public void setDefaultState(String animationTitle) {
         for (AnimationState state : states) {
             if (state.getTitle().equals(animationTitle)) {

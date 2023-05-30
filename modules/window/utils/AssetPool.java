@@ -16,8 +16,11 @@ public class AssetPool {
     private static Map<String, Sound> sounds = new HashMap<>();
 
 
-    //Divides the processes into HashMaps so that what should be process together is processed together. To make sure
-    // the rendering is as efficient as possible
+    /**
+     * Divides the processes into HashMaps so that what should be process together is processed together.
+     * To make sure the rendering is as efficient as possible
+     * @return the shader created or that already exists
+     */
     public static Shader getShader() {
         String resourceName = "assets/shaders/default.glsl";
         File file = new File(resourceName);
@@ -43,11 +46,12 @@ public class AssetPool {
     }
 
     /**
-     * @param resourceName filepath
+     * Adds a new spritesheet to the asset pool for later use
+     * @param resourceName image filepath
      * @param spriteWidth width of each individual sprite
      * @param spriteHeight height of each individual sprite
-     * @param numberOfSprites number of individual sprites
-     * @param spacing spacing between sprites
+     * @param numberOfSprites number of individual sprites in the image
+     * @param spacing spacing between each sprite
      */
     public static void addSpriteSheet(String resourceName, int spriteWidth, int spriteHeight, int numberOfSprites, int spacing) {
         Spritesheet spritesheet = new Spritesheet(AssetPool.getTexture(resourceName), spriteWidth, spriteHeight, numberOfSprites, spacing);
@@ -58,7 +62,8 @@ public class AssetPool {
     }
 
     /**
-     * @param resourceName filepath
+     * Gets the already added spritesheet if it exists and returns it
+     * @param resourceName image filepath
      * @return list of sprites
      */
     public static Spritesheet getSpritesheet(String resourceName) {
@@ -69,6 +74,11 @@ public class AssetPool {
         return AssetPool.spritesheets.getOrDefault(file.getAbsolutePath(), null);
     }
 
+    /**
+     * Gets the already added sound if it exists and returns it
+     * @param filepath sound filepath
+     * @return the sound if it exists
+     */
     public static Sound getSound(String filepath) {
         File file = new File(filepath);
         if (sounds.containsKey(file.getAbsolutePath())) {
@@ -80,14 +90,18 @@ public class AssetPool {
         return null;
     }
 
-    public static Sound addSound(String filepath, boolean loops) {
+    /**
+     * Adds the sound file to the asset pool for later use
+     * @param filepath sound filepath
+     * @param loops if the sound loops or not
+     */
+    public static void addSound(String filepath, boolean loops) {
         File file = new File(filepath);
         if (sounds.containsKey(file.getAbsolutePath())) {
-            return sounds.get(file.getAbsolutePath());
+            sounds.get(file.getAbsolutePath());
         } else {
             Sound sound = new Sound(filepath, loops);
             AssetPool.sounds.put(file.getAbsolutePath(), sound);
-            return sound;
         }
     }
 }
